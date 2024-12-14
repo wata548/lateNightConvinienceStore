@@ -27,7 +27,6 @@ public class CharacterRaw {
     public MatchItemAndCount[] buyingItem2;
     public MatchItemAndCount[] buyingItem3;
 }
-
 public class Character {
     private string name;
     private Dictionary<string, Sprite> images;
