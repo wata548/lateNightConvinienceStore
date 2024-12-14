@@ -1,0 +1,222 @@
+[
+    {
+        "name": "주인공",
+        "defaultImagePath": "Person/Player/",
+        "image": [
+            "Standing",
+            "Profile"
+        ],
+        "buyingItem1": [],
+        "buyingItem2": [],
+        "buyingItem3": []
+    },
+
+    {
+        "name": "단소 할아버지",
+        "defaultImagePath": "Person/DanSo/",
+        "image": [
+            "Standing",
+            "Profile"
+        ],
+
+        "buyingItem1" : [
+            {
+                "name": "막걸리",
+                "number": 2
+            },
+            {
+                "name": "소주",
+                "number": 1
+            },
+            {
+                "name": "커피땅콩",
+                "number": 2
+            },
+            {
+                "name": "담배",
+                "number": 1
+            },
+            {
+                "name": "풀무원두부",
+                "number": 1
+            }
+        ],
+        "buyingItem2" : [
+
+            {
+                "name": "먹태깡깡",
+                "number": 1
+            },
+            {
+                "name": "6포",
+                "number": 1
+            },
+            {
+                "name": "라이터",
+                "number": 1
+            },
+            {
+                "name": "담배",
+                "number": 1
+            },
+            {
+                "name": "소주",
+                "number": 2
+            }
+        ],
+        "buyingItem3" : [
+
+            {
+                "name": "에너지 음료",
+                "number": 2
+            },
+            {
+                "name": "면도기",
+                "number": 1
+            },
+            {
+                "name": "숙취해소제",
+                "number": 2
+            },
+            {
+                "name": "소주",
+                "number": 8
+            },
+            {
+                "name": "핫바",
+                "number": 8
+            }
+        ]
+    },
+
+    {
+        "name": "부자 아줌마",
+        "defaultImagePath": "Person/Ms_Rich/",
+        "image": [
+            "Standing",
+            "Profile"
+        ],
+
+        "buyingItem1": [
+
+            {
+                "name": "하겐다즈",
+                "number": 3
+            },
+            {
+                "name": "두바이 초콜릿",
+                "number": 2
+            },
+            {
+                "name": "돼지 머리 편육",
+                "number": 2
+            },
+            {
+                "name": "와인",
+                "number": 2
+            }
+        ],
+        "buyingItem2": [
+            {
+                "name": "함께 더 아이스크림",
+                "number": 4
+            },
+            {
+                "name": "기프트 카드",
+                "number": 50
+            },
+            {
+                "name": "리락쿠마",
+                "number": 1
+            },
+            {
+                "name": "우산",
+                "number": 1
+            }
+        ],
+        "buyingItem3": [
+            {
+                "name": "보조배터리",
+                "number": 1
+            },
+            {
+                "name": "이어폰",
+                "number": 1
+            },
+            {
+                "name": "로얄카드",
+                "number": 2
+            },
+            {
+                "name": "충전기",
+                "number": 1
+            }
+        ]
+    },
+
+    {
+        "name": "초딩",
+        "defaultImagePath" : "Person/Choding/",
+        "image" : [
+            "Standing",
+            "Profile"
+        ],
+        "buyingItem1": [
+
+            {
+                "name": "포타이토칩",
+                "number": 2
+            },
+            {
+                "name": "나의구미젤리",
+                "number": 3
+            },
+            {
+                "name": "츄팝츄",
+                "number": 3
+            },
+            {
+                "name": "아침엔 포도 주스",
+                "number": 6
+            }
+        ],
+        "buyingItem2": [
+            {
+                "name": "코가 콜라",
+                "number": 2
+
+            },
+            {
+                "name": "핫바",
+                "number": 2
+            },
+            {
+                "name": "칠계장",
+                "number": 6
+            },
+            {
+                "name": "냉동탕탕후루후루",
+                "number": 1
+            }
+        ],
+        "buyingItem3": [
+            {
+                "name": "미니돼지바",
+                "number": 12
+            },
+            {
+                "name": "나가 초콜릿",
+                "number": 6
+            },
+            {
+                "name": "연세대가고 싶빵",
+                "number": 6
+            },
+            {
+                "name":"왈치스",
+                "number": 2
+            }
+
+        ]
+    }
+]

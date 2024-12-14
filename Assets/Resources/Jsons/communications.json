@@ -1,0 +1,98 @@
+[
+    {
+        "speaker": "단소 할아버지",
+        "communications" : [
+
+            {
+                "situation": "firstCommunication",
+                "actors" : ["단소 할아버지", "주인공"],
+                "scripts" : [
+                    {"actor": 0, "script":"안녕하세요?"},
+                    {"actor": 1, "script":"안녕하세요!"},
+                    {"actor": 0, "script":"계산 부탁합니다."},
+                    {"actor": 1, "script":"네, 원하시는 물건을 순서대로 올려주세요"},
+                    {"actor": 0, "script":"네, 알겠습니다."}
+                ]
+
+            },
+
+            {
+                "situation": "endOrder",
+                "actors": ["단소 할아버지"],
+                "scripts":[
+                    {"actor": 0, "script": "여기까지"}
+                ]
+
+            },
+
+            {
+                "situation": "wrongAnswer",
+                "actors" : ["단소 할아버지"],
+                "scripts" : [
+                    {"actor": 0, "script":"가격이 틀렸잖아"}
+                ]
+
+            },
+
+            {
+                "situation": "correctAnswer",
+                "actors" : ["단소 할아버지", "주인공"],
+                "scripts" : [
+                    {"actor": 0, "script":"여기, 돈"},
+                    {"actor": 1, "script":"감사합니다!"}
+                ]
+
+            }
+                
+        ]
+
+    },
+
+    {
+        "speaker": "부자 아줌마",
+        "communications" : [
+
+            {
+                "situation": "firstCommunication",
+                "actors" : ["부자 아줌마", "주인공"],
+                "scripts" : [
+                    {"actor": 1, "script":"안녕하세요?"},
+                    {"actor": 0, "script":"어"},
+                    {"actor": 1, "script":"원하시는 물건을 순서대로 올려주세요"},
+                    {"actor": 0, "script":"응"}
+                    
+                ]
+
+            },
+
+            {
+                "situation": "endOrder",
+                "actors": ["부자 아줌마"],
+                "scripts":[
+                    {"actor": 0, "script": "이것까지 결제해 줘"}
+                ]
+
+            },
+
+            {
+                "situation": "wrongAnswer",
+                "actors" : ["부자 아줌마"],
+                "scripts" : [
+                    {"actor": 0, "script":"틀렸잖아"}                    
+                ]
+
+            },
+
+            {
+                "situation": "correctAnswer",
+                "actors" : ["부자 아줌마"],
+                "scripts" : [
+                    {"actor": 0, "script":"받아"}                    
+                ]
+
+            }
+                
+        ]
+
+    }
+]
