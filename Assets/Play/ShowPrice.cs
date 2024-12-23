@@ -72,5 +72,6 @@ public class ShowPrice: MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Space)) {
             StartShow();
         }
+            
     }
 }
