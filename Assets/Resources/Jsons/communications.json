@@ -1,5 +1,21 @@
 [
     {
+        "speaker": "주인공",
+        "communications" : [
+            {
+                "situation" : "gameStart",
+                "actor" : ["주인공", "삼촌", "...","Naration"],
+                "scripts": [
+                    {"actor": 2, "script": "...여보세요?"},
+                    {"actor": 1, "script": "ㅇㅇ이 맞니?"},
+                    {"actor": 2, "script": "네..."},
+                    {"actor": 1, "script": "집에만 있다가 일하게 돼서 힘들텐데. 야간 AU편의점 알바를 맡아줘서 고맙구나"},
+                    {"actor": 0, "script": "아니에요... 저야말로 감사하죠."}
+                ]
+            }
+        ]
+    },
+    {
         "speaker": "단소 할아버지",
         "communications" : [
 

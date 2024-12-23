@@ -56,7 +56,9 @@
     {
         "item": "포타이토칩",
         "price": 2500,
-        "image": "Items/DanSo" },
+        "image": "Items/DanSo" 
+    },
+    
     {
         "item": "나의구미젤리",
         "price": 2500,
@@ -69,13 +71,6 @@
         "image": "Items/DanSo"
     },
     
-    {
-        "item": "아침엔 포도 주스",
-        "price": 2000,
-        "image": "Items/DanSo"
-    },
-
-
     {
         "item": "아침엔 포도 주스",
         "price": 2000,
@@ -164,12 +159,6 @@
         "item": "숙취해소제",
         "price": 1500,
         "image": "Items/DanSo" 
-    },
-    
-    {
-        "item": "핫바",
-        "price": 2500,
-        "image": "Items/DanSo"
     },
     
     {

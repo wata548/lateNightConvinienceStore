@@ -11,73 +11,121 @@ using System.Collections.Generic;
 using System.Linq;
 
 [Serializable]
-public class MatchItemAndCount {
+public class MatchItemAndCountRaw {
 
-    private string name;
-    private string number;
+    public string  name;
+    public int     number;
+    
 }
-
 [Serializable]
 public class CharacterRaw {
     
     public string name;
     public string defaultImagePath;
     public string[] image;
-    public MatchItemAndCount[] buyingItem1;
-    public MatchItemAndCount[] buyingItem2;
-    public MatchItemAndCount[] buyingItem3;
+    public MatchItemAndCountRaw[] buyingItem1;
+    public MatchItemAndCountRaw[] buyingItem2;
+    public MatchItemAndCountRaw[] buyingItem3;
+}
+
+public class MatchItemAndCount {
+    
+    public string Name { get; private set; }
+    public int Number { get; private set; }
+
+    public MatchItemAndCount(string name, int number) {
+        Name = name;
+        Number = Number;
+    }
+    public static explicit operator MatchItemAndCount(MatchItemAndCountRaw target) {
+
+        var casting = new MatchItemAndCount(
+            target.name,
+            target.number
+        );
+
+        return casting;
+    }
+
+    public override string ToString() {
+        return $"{Name}, {Number}개";
+    }
 }
 public class Character {
-    private string name;
-    private Dictionary<string, Sprite> images;
-    private MatchItemAndCount[] purchaseList1;
-    private MatchItemAndCount[] purchaseList2;
-    private MatchItemAndCount[] purchaseList3;
+    public string Name { get; private set; }
+    public Dictionary<string, Sprite> Images { get; private set; }
+    public MatchItemAndCount[] PurchaseList1 { get; private set; }
+    public MatchItemAndCount[] PurchaseList2 { get; private set; }
+    public MatchItemAndCount[] PurchaseList3 { get; private set; }
 
     public Character(CharacterRaw rawInfo) {
 
-        name = rawInfo.name;
+        Name = rawInfo.name;
 
-        images = new();
+        Images = new();
         foreach (var imageName in rawInfo.image) {
 
             var image = Resources.Load<Sprite>(rawInfo.defaultImagePath + imageName);
-            images.Add(imageName, image);
+            Images.Add(imageName, image);
         }
 
-        purchaseList1 = rawInfo.buyingItem1;
-        purchaseList2 = rawInfo.buyingItem2;
-        purchaseList3 = rawInfo.buyingItem3;
+        PurchaseList1 = rawInfo.buyingItem1
+            .Select((info) => (MatchItemAndCount)info)
+            .ToArray();
+        PurchaseList2 = rawInfo.buyingItem2
+            .Select((info) => (MatchItemAndCount)info)
+            .ToArray();
+        PurchaseList3 = rawInfo.buyingItem3
+            .Select((info) => (MatchItemAndCount)info)
+            .ToArray();
     }
 }
 
-public class Item {
-    public string name;
+[Serializable]
+public class ItemRaw {
+    public string item;
     public int price;
+    public string image;
 }
 
 public class ConvertJson: MonoBehaviour {
 
+    public static ConvertJson Instance { get; private set; } = null;
+    
     private Dictionary<string, int> itemInfo = new();
-    private Character[] characterInfo;
+    private Dictionary<string, Character> characterInfo;
     private string peopleInfoPath = "Assets\\Resources\\Jsons\\People.json";
     private string itemInfoPath = "Assets\\Resources\\Jsons\\itemInfo.json";
-    public void Decode() {
-
-        string json = File.ReadAllText(peopleInfoPath);
-        var characterRawInfo = JsonConvert.DeserializeObject<CharacterRaw[]>(json);
+    
+    public void Decode() { string json = File.ReadAllText(peopleInfoPath); var characterRawInfo = JsonConvert.DeserializeObject<CharacterRaw[]>(json);
         characterInfo = characterRawInfo
             .Select((rawInfo) => new Character(rawInfo))
-            .ToArray();
+            .ToDictionary((character => character.Name));
         
         json = File.ReadAllText(itemInfoPath);
-        var items = JsonConvert.DeserializeObject<Item[]>(json);
+        var items = JsonConvert.DeserializeObject<ItemRaw[]>(json);
         foreach(var item in items) {
-            itemInfo.Add(item.name, item.price);
+            itemInfo.Add(item.item, item.price);
         }
     }
 
+    public Character GetCharacter(string name) {
+        if (!characterInfo.ContainsKey(name))
+            throw new Exception($"This name is not correct: {name}");
+        
+        return characterInfo[name];
+    }
+
+    public int GetPrice(string name) {
+        if (!itemInfo.ContainsKey(name))
+            throw new Exception($"This name is not correct: {name}");
+
+        return itemInfo[name];
+    }
+
     private void Awake() {
+        
         Decode();
+        Instance ??= this;
     }
 }
