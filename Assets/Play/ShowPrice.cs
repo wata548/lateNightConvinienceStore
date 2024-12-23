@@ -41,14 +41,19 @@ public class ShowPrice: MonoBehaviour {
 
         if (index >= purchaseList.Count || showing)
             return;
+
+        string puchaseItem = purchaseList[index].Name;
+        int count = purchaseList[index].Number;
+        int itemPrice = ConvertJson.Instance.GetPrice(puchaseItem);
+        index++;
         
-        price.text = purchaseList[index++].Name;
+        price.text = $"{puchaseItem}\t{itemPrice}원\t{count}개";
 
         showing = true;
         priceBoxBack.DOBlink(0.8f, 1.5f, 0.8f)
             .OnComplete(() => showing = false);
         price.DOBlink(0.7f, 1.4f, 0.7f)
-            .DOWait(0.1f);
+            .DOBeforeWait(0.1f);
     }
     
     //==================================================||Unity Logic 
@@ -72,6 +77,5 @@ public class ShowPrice: MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Space)) {
             StartShow();
         }
-            
     }
 }

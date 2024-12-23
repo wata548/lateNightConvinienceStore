@@ -35,7 +35,7 @@ public class MatchItemAndCount {
 
     public MatchItemAndCount(string name, int number) {
         Name = name;
-        Number = Number;
+        Number = number;
     }
     public static explicit operator MatchItemAndCount(MatchItemAndCountRaw target) {
 
@@ -92,15 +92,20 @@ public class ConvertJson: MonoBehaviour {
 
     public static ConvertJson Instance { get; private set; } = null;
     
-    private Dictionary<string, int> itemInfo = new();
+    private readonly Dictionary<string, int> itemInfo = new();
     private Dictionary<string, Character> characterInfo;
-    private string peopleInfoPath = "Assets\\Resources\\Jsons\\People.json";
-    private string itemInfoPath = "Assets\\Resources\\Jsons\\itemInfo.json";
+    private readonly string peopleInfoPath = "Assets\\Resources\\Jsons\\People.json";
+    private readonly string itemInfoPath = "Assets\\Resources\\Jsons\\itemInfo.json";
+    public List<string> PeopleList { get; private set; }= null;
     
     public void Decode() { string json = File.ReadAllText(peopleInfoPath); var characterRawInfo = JsonConvert.DeserializeObject<CharacterRaw[]>(json);
         characterInfo = characterRawInfo
             .Select((rawInfo) => new Character(rawInfo))
             .ToDictionary((character => character.Name));
+
+        PeopleList = characterRawInfo
+            .Select(rawInfo => rawInfo.name)
+            .ToList();
         
         json = File.ReadAllText(itemInfoPath);
         var items = JsonConvert.DeserializeObject<ItemRaw[]>(json);
@@ -110,17 +115,17 @@ public class ConvertJson: MonoBehaviour {
     }
 
     public Character GetCharacter(string name) {
-        if (!characterInfo.ContainsKey(name))
+        if (!characterInfo.TryGetValue(name, out Character character))
             throw new Exception($"This name is not correct: {name}");
         
-        return characterInfo[name];
+        return character;
     }
 
     public int GetPrice(string name) {
-        if (!itemInfo.ContainsKey(name))
+        if (!itemInfo.TryGetValue(name, out int price))
             throw new Exception($"This name is not correct: {name}");
 
-        return itemInfo[name];
+        return price;
     }
 
     private void Awake() {
