@@ -7,19 +7,33 @@ using DG.Tweening;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
+public enum ShowState {
+
+    On,
+    Off,
+    End
+};
+
 public class ShowPrice: MonoBehaviour {
 
+   //==================================================||Property 
+   
+    public static ShowPrice Instance { get; private set; } = null;
+    
     //==================================================||Field 
+    
     [SerializeField] private GameObject priceBox = null;
+    [SerializeField] private string characterName;
+    private List<MatchItemAndCount> purchaseList; 
+    
     private TMP_Text price;
     private Image priceBoxBack;
-    [SerializeField] private string characterName;
     private int day = 1;
     private bool showing = false;
-    
-    [SerializeField] private List<MatchItemAndCount> purchaseList; 
+    private int index = 0;
     
     //==================================================||Method 
+
     private void Setting() {
 
         var character = ConvertJson.Instance.GetCharacter(characterName);
@@ -36,28 +50,40 @@ public class ShowPrice: MonoBehaviour {
         purchaseList = shuffle.ToList();
     }
 
-    private int index = 0;
-    public void StartShow() {
+    public ShowState StartShow(float appear = 0.8f, float stay = 1.5f, float disappear = 0.8f, float power = 0) {
+
+        if (showing)
+            return ShowState.Off;
 
         if (index >= purchaseList.Count || showing)
-            return;
+            return ShowState.End;
 
         string puchaseItem = purchaseList[index].Name;
         int count = purchaseList[index].Number;
         int itemPrice = ConvertJson.Instance.GetPrice(puchaseItem);
         index++;
         
-        price.text = $"{puchaseItem}\t{itemPrice}원\t{count}개";
+        price.text = $"{puchaseItem}  {itemPrice}원  {count}개";
 
         showing = true;
-        priceBoxBack.DOBlink(0.8f, 1.5f, 0.8f)
+        priceBoxBack.DOBlink(appear, stay, disappear, power)
             .OnComplete(() => showing = false);
-        price.DOBlink(0.7f, 1.4f, 0.7f)
+        price.DOBlink(appear - 0.1f, stay, disappear - 0.1f, power)
             .DOBeforeWait(0.1f);
+
+        return ShowState.On;
     }
     
     //==================================================||Unity Logic 
-    
+
+    private void Awake() {
+
+        if (Instance == null)
+            Instance = this;
+        else if (Instance != this)
+            Destroy(this);
+    }
+
     private void Start() {
         if (priceBox == null)
             throw new Exception("You didn't setting price box");

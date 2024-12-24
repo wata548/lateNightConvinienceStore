@@ -4,7 +4,7 @@
         "communications" : [
             {
                 "situation" : "gameStart",
-                "actor" : ["주인공", "삼촌", "...","Naration"],
+                "actors" : ["주인공", "삼촌", "...","Naration"],
                 "scripts": [
                     {"actor": 2, "script": "...여보세요?"},
                     {"actor": 1, "script": "ㅇㅇ이 맞니?"},
@@ -21,13 +21,16 @@
 
             {
                 "situation": "firstCommunication",
-                "actors" : ["단소 할아버지", "주인공"],
+                "actors" : ["단소 할아버지", "주인공", "Sound", "Image"],
                 "scripts" : [
-                    {"actor": 0, "script":"안녕하세요?"},
-                    {"actor": 1, "script":"안녕하세요!"},
-                    {"actor": 0, "script":"계산 부탁합니다."},
-                    {"actor": 1, "script":"네, 원하시는 물건을 순서대로 올려주세요"},
-                    {"actor": 0, "script":"네, 알겠습니다."}
+                    {"actor": 2, "script":"ball.mp4"},
+                    {"actor": 3, "script":"coming", "skip": true},
+                    {"actor": 1, "script":"어서오ㅅ..."},
+                    {"actor": 0, "script":"어이, 너 누구야."},
+                    {"actor": 1, "script":"네?"},
+                    {"actor": 3, "script":"dropItems", "skip": true},
+                    {"actor": 2, "script":"dropItems.mp4", "skip": true},
+                    {"actor": 0, "script":"계산이나 해!"}
                 ]
 
             },
@@ -38,14 +41,15 @@
                 "scripts":[
                     {"actor": 0, "script": "여기까지"}
                 ]
-
             },
 
             {
                 "situation": "wrongAnswer",
-                "actors" : ["단소 할아버지"],
+                "actors" : ["단소 할아버지", "Sound", "Image"],
                 "scripts" : [
-                    {"actor": 0, "script":"가격이 틀렸잖아"}
+                    {"actor": 2, "script":"wrongDanso1", "skip": true},
+                    {"actor": 1, "script":"wrongDanso1.mp4", "skip": true},
+                    {"actor": 0, "script":"젊은이가 이거 하나 못해!?!"}
                 ]
 
             },
@@ -59,7 +63,7 @@
                 ]
 
             }
-                
+
         ]
 
     },
@@ -76,7 +80,7 @@
                     {"actor": 0, "script":"어"},
                     {"actor": 1, "script":"원하시는 물건을 순서대로 올려주세요"},
                     {"actor": 0, "script":"응"}
-                    
+
                 ]
 
             },
@@ -94,7 +98,7 @@
                 "situation": "wrongAnswer",
                 "actors" : ["부자 아줌마"],
                 "scripts" : [
-                    {"actor": 0, "script":"틀렸잖아"}                    
+                    {"actor": 0, "script":"틀렸잖아"}
                 ]
 
             },
@@ -103,11 +107,10 @@
                 "situation": "correctAnswer",
                 "actors" : ["부자 아줌마"],
                 "scripts" : [
-                    {"actor": 0, "script":"받아"}                    
+                    {"actor": 0, "script":"받아"}
                 ]
-
             }
-                
+
         ]
 
     }

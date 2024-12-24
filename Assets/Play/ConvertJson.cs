@@ -9,6 +9,8 @@ using Unity.VisualScripting;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using NUnit.Framework.Constraints;
+using UnityEngine.Serialization;
 
 [Serializable]
 public class MatchItemAndCountRaw {
@@ -88,17 +90,105 @@ public class ItemRaw {
     public string image;
 }
 
+[Serializable]
+public class DialogRaw {
+
+    public string situation;
+    public string[] actors;
+    public DialogDetailRaw[] scripts;
+}
+
+[Serializable]
+public class DialogsRaw {
+
+    public string speaker;
+    public DialogRaw[] communications;
+}
+
+[Serializable]
+public class DialogDetailRaw {
+
+    public int actor;
+    public string script;
+    public bool skip = false;
+}
+
+public class Dialog {
+    public string Situation { get; private set; }
+    public List<string> Actors { get; private set; }
+    public List<DialogDetail> Scripts { get; private set; }
+
+    public Dialog(string situation, string[] actors, DialogDetailRaw[] scripts) {
+
+        Situation = situation;
+        Actors = actors.ToList();
+        Scripts = scripts
+            .Select(rawData => (DialogDetail)rawData)
+            .ToList();
+    }
+
+    public static explicit operator Dialog(DialogRaw target) {
+
+        var result = new Dialog(target.situation, target.actors, target.scripts);
+        return result;
+    }
+}
+
+public class DialogDetail {
+    public int Actor { get; private set; }
+    public string Script { get; private set; }
+    public bool Skip { get; private set; }
+
+    public DialogDetail(int actor, string script, bool skip = false) {
+
+        Actor = actor;
+        Script = script;
+        Skip = skip;
+    }
+
+    public static explicit operator DialogDetail(DialogDetailRaw target) {
+
+        var result = new DialogDetail(target.actor, target.script, target.skip);
+        return result;
+    }
+}
+
+public class Dialogs {
+    
+    public string Speaker { get; private set; }
+    public Dictionary<string, Dialog> Communications { get; private set; }
+
+    public Dialogs(string speaker, DialogRaw[] communications) {
+
+        Speaker = speaker;
+        Communications = communications
+            .Select(Communications => (Dialog)Communications)
+            .ToDictionary(dialog => dialog.Situation);
+    }
+    public static explicit operator Dialogs(DialogsRaw target) {
+
+        Dialogs result = new Dialogs(target.speaker, target.communications);
+        return result;
+    }
+}
+
 public class ConvertJson: MonoBehaviour {
 
     public static ConvertJson Instance { get; private set; } = null;
     
+   //==================================================||Field 
     private readonly Dictionary<string, int> itemInfo = new();
     private Dictionary<string, Character> characterInfo;
+    private Dictionary<string, Dialogs> CommunicationInfo;
     private readonly string peopleInfoPath = "Assets\\Resources\\Jsons\\People.json";
     private readonly string itemInfoPath = "Assets\\Resources\\Jsons\\itemInfo.json";
+    private readonly string communicationInfoPath = "Assets\\Resources\\Jsons\\communications.json";
     public List<string> PeopleList { get; private set; }= null;
     
-    public void Decode() { string json = File.ReadAllText(peopleInfoPath); var characterRawInfo = JsonConvert.DeserializeObject<CharacterRaw[]>(json);
+   //==================================================||Method 
+    public void Decode() { 
+        string json = File.ReadAllText(peopleInfoPath);
+        var characterRawInfo = JsonConvert.DeserializeObject<CharacterRaw[]>(json);
         characterInfo = characterRawInfo
             .Select((rawInfo) => new Character(rawInfo))
             .ToDictionary((character => character.Name));
@@ -112,6 +202,12 @@ public class ConvertJson: MonoBehaviour {
         foreach(var item in items) {
             itemInfo.Add(item.item, item.price);
         }
+
+        json = File.ReadAllText(communicationInfoPath);
+        var communications = JsonConvert.DeserializeObject<DialogsRaw[]>(json);
+        CommunicationInfo = communications
+            .Select((raw => (Dialogs)raw))
+            .ToDictionary(datas => datas.Speaker);
     }
 
     public Character GetCharacter(string name) {
@@ -128,9 +224,50 @@ public class ConvertJson: MonoBehaviour {
         return price;
     }
 
+    public Dialog GetDialog(string speaker, string situation) {
+
+        if (!CommunicationInfo.TryGetValue(speaker, out Dialogs dialogs))
+            throw new IndexOutOfRangeException($"speaker: {speaker} didn't exist");
+
+        if (!dialogs.Communications.TryGetValue(situation, out Dialog situationDialog))
+            throw new IndexOutOfRangeException($"situation: {speaker}-{situation} didn't exsit");
+
+        return situationDialog;
+    }
+
+    public string GetActor(string speaker, string situation, int index) {
+
+        var situationDialog = GetDialog(speaker, situation);
+        if (situationDialog.Actors.Count <= index)
+            throw new IndexOutOfRangeException($"index: {index} is over than {situationDialog.Actors.Count}");
+
+        int actor = situationDialog.Scripts[index].Actor;
+        return situationDialog.Actors[actor];
+    }
+
+    public bool GetSkip(string speaker, string situation, int index) {
+        
+        var situationDialog = GetDialog(speaker, situation);
+        if (situationDialog.Actors.Count <= index)
+            throw new IndexOutOfRangeException($"index: {index} is over than {situationDialog.Actors.Count}");
+        
+        return situationDialog.Scripts[index].Skip;
+    }
+
+    public string GetScript(string speaker, string situation, int index) {
+        
+        var situationDialog = GetDialog(speaker, situation);
+        if (situationDialog.Actors.Count <= index)
+            throw new IndexOutOfRangeException($"index: {index} is over than {situationDialog.Actors.Count}");
+                
+        return situationDialog.Scripts[index].Script;
+    }
+
+   //==================================================||Unity Logic 
     private void Awake() {
         
         Decode();
         Instance ??= this;
+        Debug.Log(GetScript("단소 할아버지", "firstCommunication", 0));
     }
 }
