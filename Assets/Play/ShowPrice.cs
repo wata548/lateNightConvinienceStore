@@ -102,6 +102,8 @@ public class ShowPrice: MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.Space)) {
             StartShow();
+            Debug.Log(ConvertJson.Instance.GetScript("단소 할아버지", "firstCommunication", 0));
+            
         }
     }
 }

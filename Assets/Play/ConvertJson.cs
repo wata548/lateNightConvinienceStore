@@ -268,6 +268,5 @@ public class ConvertJson: MonoBehaviour {
         
         Decode();
         Instance ??= this;
-        Debug.Log(GetScript("단소 할아버지", "firstCommunication", 0));
     }
 }
