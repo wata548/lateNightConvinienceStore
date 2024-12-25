@@ -66,9 +66,9 @@ public class ShowPrice: MonoBehaviour {
         price.text = $"{puchaseItem}  {itemPrice}원  {count}개";
 
         showing = true;
-        priceBoxBack.DOBlink(appear, stay, disappear, power)
+        priceBoxBack.DOBlink(appear, stay, disappear)
             .OnComplete(() => showing = false);
-        price.DOBlink(appear - 0.1f, stay, disappear - 0.1f, power)
+        price.DOBlink(appear - 0.1f, stay, disappear - 0.1f)
             .DOBeforeWait(0.1f);
 
         return ShowState.On;
@@ -103,7 +103,6 @@ public class ShowPrice: MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Space)) {
             StartShow();
             Debug.Log(ConvertJson.Instance.GetScript("단소 할아버지", "firstCommunication", 0));
-            
         }
     }
 }
