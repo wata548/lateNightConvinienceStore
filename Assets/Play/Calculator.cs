@@ -1,5 +1,6 @@
 using System;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Calculator : MonoBehaviour {
@@ -7,7 +8,7 @@ public class Calculator : MonoBehaviour {
     [SerializeField] private GameObject calculator;
     [SerializeField] private TMP_Text calculatorNumber;
 
-    private const long MaxValue = (long)1e+16;
+    private const long MaxValue = (long)1e+10;
     
     public void TurnOn() => calculator.SetActive(true);
     public void TurnOff() => calculator.SetActive(false);
@@ -55,5 +56,44 @@ public class Calculator : MonoBehaviour {
         else
             Estimate /= 10;
     }
-    
+
+    private readonly float waitStartBackSpace = 0.5f;
+    private readonly float waitBackSpace = 0.1f;
+    private float backSpace = 0;
+    private bool startBackSpace = false;
+    private void Update() {
+
+        for (int i = 0; i <= 9; i++) {
+
+            if (Input.GetKeyDown(i.ToString())) {
+
+                AddValue(i);
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Backspace)) {
+            Erase();
+        }
+        
+        else if (Input.GetKey(KeyCode.Backspace)) {
+            backSpace += Time.deltaTime;
+
+            if (!startBackSpace && backSpace > waitStartBackSpace) {
+                startBackSpace = true;
+                Erase();
+                backSpace = 0;
+            }
+            else if (startBackSpace && backSpace > waitBackSpace) {
+
+                Erase();
+                backSpace = 0;
+            }
+        }
+            
+        else if (Input.GetKeyUp(KeyCode.Backspace)) {
+
+            backSpace = 0;
+            startBackSpace = false;
+        }
+    }
 }
