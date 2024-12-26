@@ -45,7 +45,8 @@
 
             {
                 "name": "먹태깡깡",
-                "number": 1
+                "number": 1,
+                "eventCount": 2
             },
             {
                 "name": "6포",
@@ -68,7 +69,8 @@
 
             {
                 "name": "에너지 음료",
-                "number": 2
+                "number": 2,
+                "eventCount": 1
             },
             {
                 "name": "면도기",
@@ -84,7 +86,8 @@
             },
             {
                 "name": "핫바",
-                "number": 8
+                "number": 8,
+                "eventCount": 1
             }
         ]
     },
@@ -101,7 +104,8 @@
 
             {
                 "name": "하겐다즈",
-                "number": 3
+                "number": 3,
+                "eventCount": 2
             },
             {
                 "name": "두바이 초콜릿",
@@ -119,7 +123,8 @@
         "buyingItem2": [
             {
                 "name": "함께 더 아이스크림",
-                "number": 4
+                "number": 4,
+                "eventCount": 3
             },
             {
                 "name": "기프트 카드",
@@ -177,22 +182,26 @@
             },
             {
                 "name": "아침엔 포도 주스",
-                "number": 6
+                "number": 6,
+                "eventCount": 1
             }
         ],
         "buyingItem2": [
             {
                 "name": "코가 콜라",
-                "number": 2
+                "number": 2,
+                "eventCount": 1
 
             },
             {
                 "name": "핫바",
-                "number": 2
+                "number": 2,
+                "eventCount": 1
             },
             {
                 "name": "칠계장",
-                "number": 6
+                "number": 6,
+                "eventCount": 2
             },
             {
                 "name": "냉동탕탕후루후루",
@@ -202,19 +211,23 @@
         "buyingItem3": [
             {
                 "name": "미니돼지바",
-                "number": 12
+                "number": 12,
+                "eventCount": 5
             },
             {
                 "name": "나가 초콜릿",
-                "number": 6
+                "number": 6,
+                "eventCount": 1
             },
             {
                 "name": "연세대가고 싶빵",
-                "number": 6
+                "number": 6,
+                "eventCount": 1
             },
             {
                 "name":"왈치스",
-                "number": 2
+                "number": 2,
+                "eventCount": 1
             }
 
         ]

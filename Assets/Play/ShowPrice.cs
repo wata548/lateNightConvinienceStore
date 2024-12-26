@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using System.Collections.Generic;
 using DG.Tweening;
+using UnityEditor.Rendering;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
@@ -23,18 +24,18 @@ public class ShowPrice: MonoBehaviour {
     //==================================================||Field 
     
     [SerializeField] private GameObject priceBox = null;
-    [SerializeField] private string characterName;
-    private List<MatchItemAndCount> purchaseList; 
     
+    private List<MatchItemAndCount> purchaseList; 
     private TMP_Text price;
     private Image priceBoxBack;
-    private int day = 1;
     private bool showing = false;
     private int index = 0;
+
+    public int result = 0;
     
     //==================================================||Method 
 
-    private void Setting() {
+    private void Setting(int day, string characterName) {
 
         var character = ConvertJson.Instance.GetCharacter(characterName);
 
@@ -47,10 +48,24 @@ public class ShowPrice: MonoBehaviour {
         };
         
         Shuffler<MatchItemAndCount> shuffle = new(tempPurchaseList);
-        purchaseList = shuffle.ToList();
+        purchaseList = shuffle
+            .ToList();
+
+        result = purchaseList.Sum(item => {
+
+            int price = ConvertJson.Instance.GetPrice(item.Name);
+            
+            //Check unevent item
+            int count = item.Number * item.Event / (1 + item.Event);
+            if (item.Event == 0)
+                count = item.Number;
+
+            return count * price;
+        });
+             
     }
 
-    public ShowState StartShow(float appear = 0.8f, float stay = 1.5f, float disappear = 0.8f, float power = 0) {
+    public ShowState StartShow(float appear = 0.9f, float stay = 1.8f, float disappear = 0.9f, float power = 0) {
 
         if (showing)
             return ShowState.Off;
@@ -94,7 +109,7 @@ public class ShowPrice: MonoBehaviour {
 
         priceBoxBack = priceBox.GetComponent<Image>();
 
-        Setting();
+        Setting(3,"초딩");
     }
     
     //Test

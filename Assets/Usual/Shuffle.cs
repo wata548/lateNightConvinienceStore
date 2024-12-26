@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System;
+using UnityEngine;
+using Random = System.Random;
 
 public class Shuffler<T> : IEnumerable<T> {
 
@@ -22,7 +23,7 @@ public class Shuffler<T> : IEnumerable<T> {
         }
 
         foreach (var item in items) {
-
+            
             yield return item;
         }
     }

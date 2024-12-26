@@ -17,7 +17,7 @@ public class MatchItemAndCountRaw {
 
     public string  name;
     public int     number;
-    
+    public int     eventCount = 0;
 }
 [Serializable]
 public class CharacterRaw {
@@ -34,16 +34,19 @@ public class MatchItemAndCount {
     
     public string Name { get; private set; }
     public int Number { get; private set; }
+    public int Event { get; private set; }
 
-    public MatchItemAndCount(string name, int number) {
+    public MatchItemAndCount(string name, int number, int eventCount) {
         Name = name;
         Number = number;
+        Event = eventCount;
     }
     public static explicit operator MatchItemAndCount(MatchItemAndCountRaw target) {
 
         var casting = new MatchItemAndCount(
             target.name,
-            target.number
+            target.number,
+            target.eventCount
         );
 
         return casting;

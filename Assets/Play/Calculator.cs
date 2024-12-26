@@ -2,6 +2,7 @@ using System;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Calculator : MonoBehaviour {
    
@@ -61,8 +62,12 @@ public class Calculator : MonoBehaviour {
     private readonly float waitBackSpace = 0.1f;
     private float backSpace = 0;
     private bool startBackSpace = false;
+    
     private void Update() {
-
+        
+        if (!calculator.activeSelf)
+            return;
+        
         for (int i = 0; i <= 9; i++) {
 
             if (Input.GetKeyDown(i.ToString())) {
@@ -71,20 +76,22 @@ public class Calculator : MonoBehaviour {
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Backspace)) {
-            Erase();
+        if (Input.GetKeyDown(KeyCode.C)) {
+
+            Erase(true);
         }
         
-        else if (Input.GetKey(KeyCode.Backspace)) {
+        if (Input.GetKey(KeyCode.Backspace)) {
+            if (backSpace == 0)
+                Erase();
+            
             backSpace += Time.deltaTime;
 
-            if (!startBackSpace && backSpace > waitStartBackSpace) {
+            bool first = !startBackSpace && backSpace > waitStartBackSpace;
+            bool after = startBackSpace && backSpace > waitBackSpace;
+            
+            if (first || after) {
                 startBackSpace = true;
-                Erase();
-                backSpace = 0;
-            }
-            else if (startBackSpace && backSpace > waitBackSpace) {
-
                 Erase();
                 backSpace = 0;
             }
