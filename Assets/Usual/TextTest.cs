@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
@@ -8,6 +9,15 @@ using Random = UnityEngine.Random;
 
 public class TextTest : MonoBehaviour {
 
+    [Serializable]
+    enum Effect {
+
+        Flow,
+        Shake,
+        None
+    };
+    
+    
 
     public TMP_Text text;
 
@@ -19,22 +29,24 @@ public class TextTest : MonoBehaviour {
         StartCoroutine(Typing(s, interval));
     }
 
-    IEnumerator Typing(string s, float interval) {
+    IEnumerator Typing(string context, float interval) {
 
         bool tag = false;
-        
-        foreach (var character in s) {
 
-            if (character == '<') {
+        foreach (var character in context) {
+
+            if (character == '<' || character == '[') {
                 tag = true;
             }
 
-            if (character == '>')
+            if (character == '>' || character == ':')
                 tag = false;
             text.text += character;
-            
-            if(!tag)
+
+            if (!tag) {
+                MoveText(text);
                 yield return new WaitForSeconds(interval);
+            }
 
         }
     }
@@ -44,14 +56,24 @@ public class TextTest : MonoBehaviour {
 
         text = GetComponent<TMP_Text>();
         
-        StartTyping($"slk[{AddColor(Color.red)}sdjh{ExtractColor()}]skjlsdhf");
+        StartTyping($"slk{AddEffect(Effect.Flow)}{AddColor(Color.red)}sdjh{ExtractColor()}{ExtractEffect()}skjlsdhf {AddEffect(Effect.Shake)}shakeshake{ExtractEffect()}");
         
     }
 
     private float time = 0;
 
-    public void MoveText(TMP_Text text, Func<int, Vector3> math) {
+    private Dictionary<Effect, Func<float, Vector3>> match = new() {
+        { Effect.Flow, index => new Vector3(0, Mathf.Sin(index * 3f + Time.time) / 4f)},
+        { Effect.Shake, index => new Vector3(Random.Range(-0.3f, 0.3f), Random.Range(-0.5f, 0.5f), 0) / 5f },
 
+    };
+    public void MoveText(TMP_Text text) {
+
+
+        bool isEffectTypeTyping = false;
+        string effectType = "";
+        Effect currentEffect = Effect.None;
+        
         text.ForceMeshUpdate();
         var textInfo = text.textInfo;
 
@@ -63,24 +85,36 @@ public class TextTest : MonoBehaviour {
             if(!character.isVisible) 
                 continue;
 
-                
+            if (isEffectTypeTyping) {
+                if (character.character == ':') {
+                    isEffectTypeTyping = false;
+
+                    currentEffect = (Effect)Enum.Parse(typeof(Effect),  effectType);
+                    continue;
+                }
+
+                effectType += character.character;
+                continue;
+            }    
 
             if (character.character == '[') {
+                effectType = "";
                 effect = true;
+                isEffectTypeTyping= true;
                 continue;
             }
 
             if (character.character == ']' && effect) {
+                currentEffect = Effect.None;
                 effect = false;
             }
-            
             
             if (!effect) {
                 continue;
             }
             var vertices = textInfo.meshInfo[character.materialReferenceIndex].vertices;
 
-            var move = math(index);
+            var move = match[currentEffect](index / 2f + Time.time);
             for (int vertex = 0; vertex < 4; vertex++) {
 
                 var tempIndex = character.vertexIndex + vertex;
@@ -123,7 +157,15 @@ public class TextTest : MonoBehaviour {
     string ExtractColor() {
         return "</color>";
     }
-    
+
+    string AddEffect(Effect effect) {
+
+        return $"<size=0%>[{effect.ToString()}:</size>";
+    }
+
+    string ExtractEffect() {
+        return "<size=0%>]</size>";
+    }
     
     public void Update() {
 
@@ -148,7 +190,6 @@ public class TextTest : MonoBehaviour {
         if (!check)
             return;
 
-        MoveText(text, index => 
-            new Vector3(Random.Range(-0.3f, 0.3f), Random.Range(-0.5f, 0.5f), 0) / 5f);
+        MoveText(text);
     }
 }
