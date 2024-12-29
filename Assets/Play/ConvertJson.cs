@@ -175,12 +175,27 @@ public class Dialogs {
     }
 }
 
+public class ItemInfo {
+   public string Name { get; private set; }
+   public int Price { get; private set; }
+   public Sprite Image { get; private set; }
+
+   public static explicit operator ItemInfo(ItemRaw target) {
+
+       var result = new ItemInfo();
+       result.Name = target.item;
+       result.Price = target.price;
+       result.Image = Resources.Load<Sprite>(target.image);
+       return result;
+   }
+}
+
 public class ConvertJson: MonoBehaviour {
 
     public static ConvertJson Instance { get; private set; } = null;
     
    //==================================================||Field 
-    private readonly Dictionary<string, int> itemInfo = new();
+    private readonly Dictionary<string, ItemInfo> itemInfo = new();
     private Dictionary<string, Character> characterInfo;
     private Dictionary<string, Dialogs> CommunicationInfo;
     private readonly string peopleInfoPath = "Assets\\Resources\\Jsons\\People.json";
@@ -203,7 +218,7 @@ public class ConvertJson: MonoBehaviour {
         json = File.ReadAllText(itemInfoPath);
         var items = JsonConvert.DeserializeObject<ItemRaw[]>(json);
         foreach(var item in items) {
-            itemInfo.Add(item.item, item.price);
+            itemInfo.Add(item.item, (ItemInfo)item);
         }
 
         json = File.ReadAllText(communicationInfoPath);
@@ -221,10 +236,17 @@ public class ConvertJson: MonoBehaviour {
     }
 
     public int GetPrice(string name) {
-        if (!itemInfo.TryGetValue(name, out int price))
+        if (!itemInfo.TryGetValue(name, out ItemInfo price))
             throw new Exception($"This name is not correct: {name}");
 
-        return price;
+        return price.Price;
+    }
+
+    public Sprite GetImage(string name) {
+        if (!itemInfo.TryGetValue(name, out ItemInfo info))
+            throw new Exception($"This name is not correct: {name}");
+
+        return info.Image;
     }
 
     public Dialog GetDialog(string speaker, string situation) {

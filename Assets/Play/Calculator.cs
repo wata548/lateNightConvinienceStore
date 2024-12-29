@@ -1,13 +1,22 @@
 using System;
+using System.Collections;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 public class Calculator : MonoBehaviour {
-   
+
     [SerializeField] private GameObject calculator;
     [SerializeField] private TMP_Text calculatorNumber;
+    [FormerlySerializedAs("interactCalculator")] [SerializeField] private Sprite[] activeNumber;
+    [SerializeField] private Sprite activeDelete;
+    [SerializeField] private Sprite activeEnter;
+    [SerializeField] private Sprite defaultCalculator;
+    [SerializeField] private SpriteRenderer renderer;
+    
+    public static Calculator Instance { get; private set; } = null;
 
     private const long MaxValue = (long)1e+10;
     
@@ -28,8 +37,20 @@ public class Calculator : MonoBehaviour {
         }
     }
 
+    IEnumerator InteractButton(Sprite sprite, float time = 0.3f) {
+
+        renderer.sprite = sprite;
+        yield return new WaitForSeconds(time);
+
+        if (renderer.sprite == sprite) {
+            renderer.sprite = defaultCalculator;
+        }
+    }
+    
     public void AddValue(int up) {
 
+        StartCoroutine(InteractButton(activeNumber[up]));
+        
         long testValue = Estimate * 10 + up;
         if (testValue >= MaxValue)
             //TODO: Show error mesege(digit limit is 15)
@@ -54,8 +75,10 @@ public class Calculator : MonoBehaviour {
         if (all)
             Estimate = 0;
 
-        else
+        else {
+            StartCoroutine(InteractButton(activeDelete));
             Estimate /= 10;
+        }
     }
 
     private readonly float waitStartBackSpace = 0.5f;
@@ -64,6 +87,9 @@ public class Calculator : MonoBehaviour {
     private bool startBackSpace = false;
     
     private void Update() {
+
+        if (Input.GetKeyDown(KeyCode.P))
+            ShoutingSkill.Instance.StartSkill("hello");
         
         if (!calculator.activeSelf)
             return;
@@ -102,5 +128,14 @@ public class Calculator : MonoBehaviour {
             backSpace = 0;
             startBackSpace = false;
         }
+    }
+
+    private void Awake() {
+
+        if (Instance == null)
+            Instance = this;
+        
+        else if (Instance != this)
+            Destroy(this);
     }
 }

@@ -2,210 +2,210 @@
     {
         "item": "막걸리",
         "price": 2600,
-        "image": "Items/water"
+        "image": "Items/MakGeoLli"
     },
 
     {
         "item": "소주",
         "price": 2500,
-        "image": "Items/DanSo"
+        "image": "Items/SoJu"
     },
 
     {
         "item": "커피땅콩",
         "price": 2500,
-        "image": "Items/triangleRice"
+        "image": "Items/CoffePinut"
     },
 
     {
         "item": "담배",
         "price": 5000,
-        "image": "Items/water"
+        "image": "Items/Smoke"
     },
 
     {
         "item": "풀유원두부",
         "price": 2000,
-        "image": "Items/DanSo"
+        "image": "Items/Tofu"
     },
 
     {
         "item": "하겐다즈",
         "price": 15000,
-        "image": "Items/triangleRice"
+        "image": "Items/Icecream2"
     },
 
     {
         "item": "두바이 초콜릿",
         "price": 4000,
-        "image": "Items/triangleRice"
+        "image": "Items/DubaiChocolate"
     },
 
     {
         "item": "돼지 머리 편육",
         "price": 12500,
-        "image": "Items/water"
+        "image": "Items/PigHead"
     },
 
     {
         "item": "와인",
         "price": 26000,
-        "image": "Items/DanSo"
+        "image": "Items/Wain"
     },
 
     {
         "item": "포타이토칩",
         "price": 2500,
-        "image": "Items/DanSo" 
+        "image": "Items/PhotatoChip" 
     },
     
     {
         "item": "나의구미젤리",
         "price": 2500,
-        "image": "Items/DanSo"
+        "image": "Items/Jelly"
     },
     
     {
         "item": "츄팝츄",
         "price": 500,
-        "image": "Items/DanSo"
+        "image": "Items/Candy"
     },
     
     {
         "item": "아침엔 포도 주스",
         "price": 2000,
-        "image": "Items/DanSo"
+        "image": "Items/GrapeJuice"
     },
 
     {
         "item": "멍태깡깡",
         "price": 1500,
-        "image": "Items/DanSo"
+        "image": "Items/MukTaeKkang"
     },
 
     {
         "item": "6포",
         "price": 4500,
-        "image": "Items/DanSo"
+        "image": "Items/Biltong"
     },
 
     {
         "item": "라이터",
         "price": 500,
-        "image": "Items/DanSo"
+        "image": "Items/Lighter"
     },
 
     {
         "item": "함께 더 아이스크림",
         "price": 10000,
-        "image": "Items/DanSo"
+        "image": "Items/Icecream1"
     },
 
     {
         "item": "기프트카드",
         "price": 10000,
-        "image": "Items/DanSo"
+        "image": "Items/GiftCard"
     },
 
     {
         "item": "리락쿠마 인형",
         "price": 100000,
-        "image": "Items/DanSo"
+        "image": "Items/Doll"
     },
 
     {
         "item": "우산",
         "price": 20000,
-        "image": "Items/DanSo"
+        "image": "Items/Umbrella"
     },
 
     {
         "item": "코가 콜라",
         "price": 2500,
-        "image": "Items/DanSo"
+        "image": "Items/Colla"
     },
 
     {
         "item": "핫바",
         "price": 2000,
-        "image": "Items/DanSo"
+        "image": "Items/Saussage"
     },
 
     {
         "item": "칠계장",
         "price": 1500,
-        "image": "Items/DanSo"
+        "image": "Items/Ramen"
     },
 
     {
         "item": "냉동탕탕후루후루",
         "price": 6000,
-        "image": "Items/DanSo"
+        "image": "Items/TangHuRu"
     },
 
     {
         "item": "에너지 음료",
         "price": 2000,
-        "image": "Items/DanSo"
+        "image": "Items/EnergyJuice"
     },
 
     {
         "item": "면도기",
         "price": 2500,
-        "image": "Items/DanSo"
+        "image": "Items/Razor"
     },
 
     {
         "item": "숙취해소제",
         "price": 1500,
-        "image": "Items/DanSo" 
+        "image": "Items/Undrunker" 
     },
     
     {
         "item": "보조배터리",
         "price": 25000,
-        "image": "Items/DanSo"
+        "image": "Items/Battery"
     },
     
     {
         "item": "이어폰",
         "price": 22000,
-        "image": "Items/DanSo"
+        "image": "Items/EarPhone"
     },
 
     {
         "item": "로얄카드",
         "price": 22000,
-        "image": "Items/DanSo"
+        "image": "Items/RoyalCard"
     },
 
     {
         "item": "충전기",
         "price": 24000,
-        "image": "Items/DanSo"
+        "image": "Items/Cable"
     },
     
     {
         "item": "미니돼지바",
         "price": 1000,
-        "image": "Items/DanSo"
+        "image": "Items/Icecream3"
     },
 
     {
         "item": "나가 초콜릿",
         "price": 1500,
-        "image": "Items/DanSo"
+        "image": "Items/NaGaChocolate"
     },
 
     {
         "item": "연세대가고 싶빵",
         "price": 2000,
-        "image": "Items/DanSo"
+        "image": "Items/CreamSue"
     },
 
     {
         "item": "왈치스",
         "price": 1500,
-        "image": "Items/DanSo"
+        "image": "Items/Juice"
     }
 ]

@@ -22,12 +22,13 @@ public class ShowPrice: MonoBehaviour {
     public static ShowPrice Instance { get; private set; } = null;
     
     //==================================================||Field 
-    
+
+    [SerializeField] private SpriteRenderer item;
     [SerializeField] private GameObject priceBox = null;
     
     private List<MatchItemAndCount> purchaseList; 
     private TMP_Text price;
-    private Image priceBoxBack;
+    private SpriteRenderer priceBoxBack;
     private bool showing = false;
     private int index = 0;
 
@@ -65,25 +66,27 @@ public class ShowPrice: MonoBehaviour {
              
     }
 
-    public ShowState StartShow(float appear = 0.9f, float stay = 1.8f, float disappear = 0.9f, float power = 0) {
+    public ShowState StartShow(float appear = 0.9f, float stay = 1.8f, float disappear = 0.9f, float power = 1) {
 
         if (showing)
             return ShowState.Off;
 
         if (index >= purchaseList.Count || showing)
             return ShowState.End;
-
-        string puchaseItem = purchaseList[index].Name;
-        int count = purchaseList[index].Number;
-        int itemPrice = ConvertJson.Instance.GetPrice(puchaseItem);
-        index++;
         
-        price.text = $"{puchaseItem}  {itemPrice}원  {count}개";
+        
+        string purchaseItem = purchaseList[index].Name;
+        int count = purchaseList[index].Number;
+        int itemPrice = ConvertJson.Instance.GetPrice(purchaseItem);
+        index++;
+
+        item.sprite = ConvertJson.Instance.GetImage(purchaseItem); 
+        price.text = $"{purchaseItem}  {itemPrice}원  {count}개";
 
         showing = true;
-        priceBoxBack.DOBlink(appear, stay, disappear)
+        priceBoxBack.DOBlink(appear, stay, disappear, power)
             .OnComplete(() => showing = false);
-        price.DOBlink(appear - 0.1f, stay, disappear - 0.1f)
+        price.DOBlink(appear - 0.1f, stay, disappear - 0.1f, power)
             .DOBeforeWait(0.1f);
 
         return ShowState.On;
@@ -107,7 +110,7 @@ public class ShowPrice: MonoBehaviour {
         if (price == null)
             throw new Exception("This price box is not correct");
 
-        priceBoxBack = priceBox.GetComponent<Image>();
+        priceBoxBack = priceBox.GetComponent<SpriteRenderer>();
 
         Setting(3,"초딩");
     }
