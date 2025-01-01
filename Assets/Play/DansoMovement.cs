@@ -20,7 +20,7 @@ public class DansoMovement : MonoBehaviour{
         CameraShake.Instance.Shake(0.1f, 0.1f);
         disappear = false;
         transform.Rotate(new Vector3(0, 0, Random.Range(0, 360f)));
-        transform.localPosition = new Vector3(Random.Range(-6f, 6f), Random.Range(-3f, 3f), -1f);
+        transform.localPosition = new Vector3(Random.Range(-6f, 6f), Random.Range(-3f, 1.7f), -1f);
         var degree = transform.rotation.eulerAngles.z;
         
         var direction = new Vector2(Mathf.Cos(degree * Mathf.Deg2Rad), Mathf.Sin(degree * Mathf.Deg2Rad));

@@ -3,6 +3,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using System.Collections.Generic;
+using System.Reflection;
 using DG.Tweening;
 using UnityEditor.Rendering;
 using UnityEngine.Serialization;
@@ -11,7 +12,7 @@ using UnityEngine.UI;
 public enum ShowState {
 
     On,
-    Off,
+    Stay,
     End
 };
 
@@ -25,9 +26,11 @@ public class ShowPrice: MonoBehaviour {
 
     [SerializeField] private SpriteRenderer item;
     [SerializeField] private GameObject priceBox = null;
-    
+    [SerializeField] private SpriteRenderer eventBox = null;
+
+    private TMP_Text eventInfo = null;
     private List<MatchItemAndCount> purchaseList; 
-    private TMP_Text price;
+    private TMP_Text price = null;
     private SpriteRenderer priceBoxBack;
     private bool showing = false;
     private int index = 0;
@@ -36,7 +39,7 @@ public class ShowPrice: MonoBehaviour {
     
     //==================================================||Method 
 
-    private void Setting(int day, string characterName) {
+    public void Setting(int day, string characterName) {
 
         var character = ConvertJson.Instance.GetCharacter(characterName);
 
@@ -69,7 +72,7 @@ public class ShowPrice: MonoBehaviour {
     public ShowState StartShow(float appear = 0.9f, float stay = 1.8f, float disappear = 0.9f, float power = 1) {
 
         if (showing)
-            return ShowState.Off;
+            return ShowState.Stay;
 
         if (index >= purchaseList.Count || showing)
             return ShowState.End;
@@ -78,14 +81,22 @@ public class ShowPrice: MonoBehaviour {
         string purchaseItem = purchaseList[index].Name;
         int count = purchaseList[index].Number;
         int itemPrice = ConvertJson.Instance.GetPrice(purchaseItem);
+        int eventCount = purchaseList[index].Event;
         index++;
 
         item.sprite = ConvertJson.Instance.GetImage(purchaseItem); 
         price.text = $"{purchaseItem}  {itemPrice}원  {count}개";
-
+        eventInfo.text = $"{eventCount} + 1 행사 제품";
+        
         showing = true;
         priceBoxBack.DOBlink(appear, stay, disappear, power)
             .OnComplete(() => showing = false);
+
+        if (eventCount != 0) {
+
+            eventBox.DOBlink(appear, stay, disappear, power);
+            eventInfo.DOBlink(appear, stay, disappear, power);
+        }
         price.DOBlink(appear - 0.1f, stay, disappear - 0.1f, power)
             .DOBeforeWait(0.1f);
 
@@ -112,15 +123,11 @@ public class ShowPrice: MonoBehaviour {
 
         priceBoxBack = priceBox.GetComponent<SpriteRenderer>();
 
-        Setting(3,"초딩");
-    }
-    
-    //Test
-    private void Update() {
-
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            StartShow();
-            Debug.Log(ConvertJson.Instance.GetScript("단소 할아버지", "firstCommunication", 0));
-        }
+        if (eventBox == null)
+            throw new Exception("please set event Box on inspector");
+        
+        eventInfo = eventBox.GetComponentInChildren<TMP_Text>();
+        if (eventInfo == null)
+            throw new Exception("wrong object. please check \"eventBox\"component");
     }
 }
