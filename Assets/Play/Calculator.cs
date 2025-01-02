@@ -10,7 +10,7 @@ public class Calculator : MonoBehaviour {
 
     [SerializeField] private GameObject calculator;
     [SerializeField] private TMP_Text calculatorNumber;
-    [FormerlySerializedAs("interactCalculator")] [SerializeField] private Sprite[] activeNumber;
+    [SerializeField] private Sprite[] activeNumber;
     [SerializeField] private Sprite activeDelete;
     [SerializeField] private Sprite activeEnter;
     [SerializeField] private Sprite defaultCalculator;
@@ -127,8 +127,24 @@ public class Calculator : MonoBehaviour {
         }
         
         else if (Input.GetKeyDown(KeyCode.Return)) {
-            GameManager.
+
+            long value = GetNumber();
+            if (value != -1) {
+                GameManager.Instance.SubmitNumber(value);
+            }
         }
+    }
+
+    public long GetNumber() {
+        if (GameManager.Instance.State != ProcedureState.Calculate)
+            return -1;
+
+        StartCoroutine(InteractButton(activeEnter));
+        var result = Estimate;
+        Estimate = 0;
+        
+        calculatorNumber.text = "0";
+        return result;
     }
 
     private void Awake() {

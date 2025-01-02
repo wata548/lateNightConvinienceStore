@@ -28,7 +28,10 @@ public class CalculatorButton: MonoBehaviour, IPointerEnterHandler, IPointerExit
                 Calculator.Instance.MultipleValue(100);
             else if (value == 's') {
                 
-                
+                 long value = Calculator.Instance.GetNumber();
+                 if (value != -1) {
+                     GameManager.Instance.SubmitNumber(value);
+                 }
             }
             else {
                 Calculator.Instance.AddValue((int)value - 48);

@@ -64,6 +64,7 @@ public class ShowPrice: MonoBehaviour {
 
             return count * price;
         });
+        index = 0;
 
         return result;
 
