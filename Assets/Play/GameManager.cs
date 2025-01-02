@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour {
     public static GameManager Instance { get; private set; } = null;
     public ProcedureState State { get; private set; } = ProcedureState.Hello;
     public int Day { get; private set; } = 1;
-    public int CustomerIndex { get; private set; } = 0;
+    public int CustomerIndex { get; private set; } = -1;
 
     private int dialogSize;
     private int currentDialog;
@@ -56,8 +56,8 @@ public class GameManager : MonoBehaviour {
         else if (Instance != this)
             Destroy(this);
         
-        
-        dayShower.text = $"{Day}Day\n{CustomerIndex + 1} / 3";
+        customers = new Shuffler<string>(ConvertJson.Instance.PeopleList.Skip(1)).ToList();
+        NextCustomer();
     }
 
     IEnumerator Typing(TMP_Text dialog, string context, float interval = 0.1f, int index = 0) {
@@ -99,18 +99,30 @@ public class GameManager : MonoBehaviour {
             isCommunication = true;
         }
 
-        if (commu.Actors[commu.Scripts[currentDialog].Actor] == "Event") {
+        var actor = commu.Actors[commu.Scripts[currentDialog].Actor];
+        if (actor == "Sprite") {
+
+            Customer.Instance.SetCustomer(commu.Scripts[currentDialog++].Script);
+            Communication();
+            return;
+        }
+        if ( actor == "Event") {
 
             //TODO: Event procedure
             currentDialog++;
+            Communication();
+            return;
         }
 
-        customerName.text = commu.Actors[commu.Scripts[currentDialog].Actor];
-        if (commu.Actors[commu.Scripts[currentDialog].Actor] == "NA") {
+        customerName.text = actor;
+        if (actor == "NA") {
             customerName.text = "";
         }
 
-        StartCoroutine(Typing(dialog, commu.Scripts[currentDialog].Script));
+        if (currentDialog < commu.Scripts.Count) {
+            
+            StartCoroutine(Typing(dialog, commu.Scripts[currentDialog].Script));
+        }
 
         currentDialog++;
     }
@@ -130,6 +142,8 @@ public class GameManager : MonoBehaviour {
         CustomerIndex++;
         NextDay();
         dayShower.text = $"{Day}Day\n{CustomerIndex + 1} / 3";
+        
+        Customer.Instance.SetCustomer(customers[CustomerIndex]);
     }
 
     private bool isSettingItem = false;
@@ -165,11 +179,6 @@ public class GameManager : MonoBehaviour {
             }
         }
         else if (State == ProcedureState.Hello && !isSettingCommunication) {
-
-            if (CustomerIndex == 0) {
-
-                customers = new Shuffler<string>(ConvertJson.Instance.PeopleList.Skip(1)).ToList();
-            }
 
             isUseSkill = false;
 

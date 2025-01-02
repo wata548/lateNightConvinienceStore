@@ -74,7 +74,7 @@
                 "situation": "wrong1",
                 "actors" : ["단소 할아버지", "Event"],
                 "scripts" : [
-                    {"actor": 2, "script":"wrongDanso1", "skip": true},
+                    {"actor": 1, "script":"wrongDanso1", "skip": true},
                     {"actor": 0, "script":"젊은이가 이거 하나 못해!?!"}
                 ]
 
@@ -131,13 +131,15 @@
 
             {
                 "situation": "Hello1",
-                "actors" : ["부자 아줌마", "주인공", "Event", "NA"],
+                "actors" : ["부자 아줌마", "주인공","Sprite", "NA"],
                 "scripts" : [
                     {"actor": 1, "script":"어서오세요. AU입니다."},
                     {"actor": 3, "script":"매몰차게 무시하고 물건을 고르러 간다."},
+                    {"actor": 2, "script":"RichHappy"},
                     {"actor": 0, "script":"홍홍홍~ 물건들이 정말 저급하기 짝이 없군요."},
+                    {"actor": 2, "script":"Rich"},
                     {"actor": 1, "script":"ㅎㅎ;; 많이 불편하신 부분이 있으신가요?"},
-                    {"actor": 2, "script":"계산이나 해요."}
+                    {"actor": 1, "script":"계산이나 해요."}
                 ]
 
             },
@@ -182,8 +184,9 @@
             },
             {
                 "situation": "wrong1",
-                "actors" : ["부자 아줌마", "Event"],
+                "actors" : ["부자 아줌마", "Event", "Sprite"],
                 "scripts" : [
+                    {"actor": 2, "script": "RichAngry"},
                     {"actor": 0, "script": "이런 것, 하나 제대로 못하니까 니가 하층민인거야!!"},
                     {"actor": 1, "script": "wrongRich1"}
                 ]
@@ -321,7 +324,7 @@
             },
             {
                 "situation": "correct1",
-                "actors" : ["초딩", "주인공", "Event"],
+                "actors" : ["초딩", "주인공", "Sprite"],
                 "scripts" : [
                     {"actor": 2, "script":"ChodingSurprise"},
                     {"actor": 1, "script":"혹시 무슨 일있니?"},
