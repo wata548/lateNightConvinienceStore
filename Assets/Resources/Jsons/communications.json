@@ -50,7 +50,21 @@
                 ]
             },
             {
-                "situation": "endOrder",
+                "situation": "endOrder1",
+                "actors": ["단소 할아버지"],
+                "scripts":[
+                    {"actor": 0, "script": "여기까지"}
+                ]
+            },
+            {
+                "situation": "endOrder2",
+                "actors": ["단소 할아버지"],
+                "scripts":[
+                    {"actor": 0, "script": "여기까지"}
+                ]
+            },
+            {
+                "situation": "endOrder3",
                 "actors": ["단소 할아버지"],
                 "scripts":[
                     {"actor": 0, "script": "여기까지"}
@@ -149,7 +163,21 @@
                 ]
             },
             {
-                "situation": "endOrder",
+                "situation": "endOrder1",
+                "actors": ["단소 할아버지"],
+                "scripts":[
+                    {"actor": 0, "script": "여기까지"}
+                ]
+            },
+            {
+                "situation": "endOrder2",
+                "actors": ["단소 할아버지"],
+                "scripts":[
+                    {"actor": 0, "script": "여기까지"}
+                ]
+            },
+            {
+                "situation": "endOrder3",
                 "actors": ["단소 할아버지"],
                 "scripts":[
                     {"actor": 0, "script": "여기까지"}
@@ -248,7 +276,21 @@
                 ]
             },
             {
-                "situation": "endOrder",
+                "situation": "endOrder1",
+                "actors": ["단소 할아버지"],
+                "scripts":[
+                    {"actor": 0, "script": "여기까지"}
+                ]
+            },
+            {
+                "situation": "endOrder2",
+                "actors": ["단소 할아버지"],
+                "scripts":[
+                    {"actor": 0, "script": "여기까지"}
+                ]
+            },
+            {
+                "situation": "endOrder3",
                 "actors": ["단소 할아버지"],
                 "scripts":[
                     {"actor": 0, "script": "여기까지"}

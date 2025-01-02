@@ -6,13 +6,15 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEditor.Rendering;
+using UnityEngine.Serialization;
 
-enum ProcedureState {
+[Serializable]
+public enum ProcedureState {
 
     Hello,
     ShowPrice,
-    EndChoicing,
-    CalCulate,
+    EndOrder,
+    Calculate,
     Result
 };
 
@@ -22,7 +24,7 @@ public class GameManager : MonoBehaviour {
     [SerializeField] private TMP_Text dialog;
     [SerializeField] private GameObject box;
 
-    private ProcedureState state = ProcedureState.Hello; 
+    public ProcedureState State { get; private set; } = ProcedureState.Hello; 
     public int Day { get; private set; } = 1;
     public int CustomerIndex { get; private set; } = 0;
 
@@ -32,6 +34,15 @@ public class GameManager : MonoBehaviour {
     private List<string> customers;
     private Dialog commu;
 
+    private int sumPrice = 0;
+    
+    private const float DefaultPriceShowTime = 1.8f;
+    private const float SkillPriceShowTime = 1f;
+    private float priceShowTime = DefaultPriceShowTime;
+    private const float DefaultPriceShowPower = 1; 
+    private const float SkillPriceShowPower = 0.8f;
+    private float priceShowPower = DefaultPriceShowPower;
+    
     private bool isCommunication = false;
     private bool typing = false;
     IEnumerator Typing(TMP_Text dialog, string context, float interval = 0.1f, int index = 0) {
@@ -100,23 +111,24 @@ public class GameManager : MonoBehaviour {
     
 
     private bool isSettingItem = false;
-    private bool isSettingHello = false;
+    private bool isSettingCommunication = false;
+    private bool isUseSkill = false;
     private void Update() {
 
-        if (state == ProcedureState.Hello && !isSettingHello) {
+        if (State == ProcedureState.Hello && !isSettingCommunication) {
             
             customers = new Shuffler<string>(ConvertJson.Instance.PeopleList.Skip(1)).ToList();
             
             commu = ConvertJson.Instance.GetDialog(customers[CustomerIndex], $"Hello{Day}");
             currentDialog = 0;
             dialogSize = commu.Scripts.Count;
-            isSettingHello = true; 
+            isSettingCommunication = true; 
             
             Communication();
         }
         
-        if ( state == ProcedureState.Hello&& (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))) {
-
+        if ( State == ProcedureState.Hello&& (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))) {
+            
             if (typing) {
                 
                 typing = false;
@@ -126,22 +138,77 @@ public class GameManager : MonoBehaviour {
                 Communication();
 
                 if (!isCommunication) {
-                    state++;
+                    State++;
+                    isSettingCommunication = false;
                 }
             }
         }
 
-        if (state == ProcedureState.ShowPrice) {
+        if (State == ProcedureState.ShowPrice) {
 
+            if (!isUseSkill) {
+                isUseSkill = true;
+
+                var customer = customers[CustomerIndex];
+                if (customer == "단소 할아버지") {
+                    if (Day == 2)
+                        DansoSkill.Instance.StartSkill();
+                    if (Day == 3) 
+                        ShoutingSkill.Instance.StartSkill();
+                }
+                else if (customer == "부자 아줌마" && Day == 3) {
+
+                    priceShowPower = SkillPriceShowPower;
+                }
+                else if (customer == "초딩" && Day == 2) {
+
+                    priceShowTime = SkillPriceShowTime;
+                }
+            }
+            
             if (!isSettingItem) {
                 
                 isSettingItem = true;
-                ShowPrice.Instance.Setting(Day, customers[CustomerIndex]);
+                sumPrice = ShowPrice.Instance.Setting(Day, customers[CustomerIndex]);
             }
 
-            if (ShowPrice.Instance.StartShow() == ShowState.End) {
+            if (ShowPrice.Instance.StartShow(priceShowTime, priceShowPower) == ShowState.End) {
+
+                
+                
+                priceShowPower = DefaultPriceShowPower;
+                priceShowTime = DefaultPriceShowTime;
+                ShoutingSkill.Instance.EndSkill();
+                DansoSkill.Instance.EndSkill();
+                
                 isSettingItem = false;
-                state++;
+                State++;
+            }
+        }
+
+        if (State == ProcedureState.EndOrder) {
+
+            if (!isSettingCommunication) {
+                
+                commu = ConvertJson.Instance.GetDialog(customers[CustomerIndex], $"endOrder{Day}");
+                currentDialog = 0;
+                dialogSize = commu.Scripts.Count;
+                isSettingCommunication = true;
+                Communication();
+            }
+            else if(Input.GetKeyDown(KeyCode.Space)) {
+                if (typing) {
+                    typing = false;
+                }
+                else {
+                    Communication();
+
+                    if (!isCommunication) {
+                        State++;
+                        isCommunication = false;
+                    }
+                }
+                
             }
         }
         

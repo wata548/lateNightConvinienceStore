@@ -35,11 +35,9 @@ public class ShowPrice: MonoBehaviour {
     private bool showing = false;
     private int index = 0;
 
-    public int result = 0;
-    
     //==================================================||Method 
 
-    public void Setting(int day, string characterName) {
+    public int Setting(int day, string characterName) {
 
         var character = ConvertJson.Instance.GetCharacter(characterName);
 
@@ -55,7 +53,7 @@ public class ShowPrice: MonoBehaviour {
         purchaseList = shuffle
             .ToList();
 
-        result = purchaseList.Sum(item => {
+        var result = purchaseList.Sum(item => {
 
             int price = ConvertJson.Instance.GetPrice(item.Name);
             
@@ -66,16 +64,21 @@ public class ShowPrice: MonoBehaviour {
 
             return count * price;
         });
-             
+
+        return result;
+
     }
 
-    public ShowState StartShow(float appear = 0.9f, float stay = 1.8f, float disappear = 0.9f, float power = 1) {
+    public ShowState StartShow(float stay = 1.8f, float power = 1, float appear = 0.9f, float disappear = 0.9f) {
 
         if (showing)
             return ShowState.Stay;
 
-        if (index >= purchaseList.Count || showing)
+        if (index >= purchaseList.Count || showing) {
+
+            item.sprite = null;
             return ShowState.End;
+        }
         
         
         string purchaseItem = purchaseList[index].Name;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
@@ -14,19 +15,23 @@ public class ShoutingSkill : MonoBehaviour {
     [SerializeField] private GameObject canvas;
     [SerializeField] private GameObject shout;
 
-    private Queue<GameObject> unactive = new();
+    private Queue<GameObject> disactive = new();
 
-    private readonly float startX = -125;
-    private readonly float endX = 400;
-    private readonly float startY = -370;
-    private readonly float endY = -425;
-
-    public void StartSkill(string context) {
+    private const float startX = -125;
+    private const float endX = 400;
+    private const float startY = -370;
+    private const float endY = -425;
+    private const float showTime = 2f;
+    private const float appearTime = 0.5f;
+    private bool isSkill = false;
+    
+    private IEnumerator MakeShout(string context) {
 
         GameObject target;
-        if (unactive.Count > 0) {
+        
+        if (disactive.Count > 0) {
 
-            target = unactive.Dequeue();
+            target = disactive.Dequeue();
         }
         else {
             target = Instantiate(shout, canvas.transform);
@@ -34,20 +39,37 @@ public class ShoutingSkill : MonoBehaviour {
         
         var newPos = new Vector2(Random.Range(startX, endX), Random.Range(startY, endY));
         target.GetComponent<RectTransform>().localPosition = newPos;
-        target.GetComponent<Image>().DOBlink(0.5f, 3f, 0.3f, 0.8f)
-            .OnComplete(() => unactive.Enqueue(target));
+        target.GetComponent<Image>().DOBlink(appearTime, showTime, appearTime, 0.8f)
+            .OnComplete(() => disactive.Enqueue(target));
 
         var text = target.GetComponentInChildren<TMP_Text>();
         text.text = context;
-        text.DOBlink(0.4f, 3, 0.2f, 0.8f)
+        text.DOBlink(appearTime - 0.1f, showTime, appearTime - 0.1f, 0.8f)
             .DOBeforeWait(0.1f);
 
+        yield return new WaitForSeconds(showTime + 2 * appearTime);
+
+        if (isSkill) {
+            
+            StartCoroutine(MakeShout(context));
+        }
+    }
+
+    public void StartSkill() {
+
+        isSkill = true;
+        StartCoroutine(MakeShout("context"));
+    }
+
+    public void EndSkill() {
+        isSkill = false;
     }
 
     private void Awake() {
 
         if (Instance == null)
             Instance = this;
+            
         else if (Instance != this)
             Destroy(this);
     }

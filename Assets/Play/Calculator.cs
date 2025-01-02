@@ -88,9 +88,6 @@ public class Calculator : MonoBehaviour {
     
     private void Update() {
 
-        if (Input.GetKeyDown(KeyCode.P))
-            ShoutingSkill.Instance.StartSkill("hello");
-        
         if (!calculator.activeSelf)
             return;
         
