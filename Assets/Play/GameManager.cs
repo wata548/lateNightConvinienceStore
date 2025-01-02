@@ -24,42 +24,46 @@ public class GameManager : MonoBehaviour {
     [SerializeField] private TMP_Text customerName;
     [SerializeField] private TMP_Text dialog;
     [SerializeField] private GameObject box;
+    [SerializeField] private TMP_Text dayShower;
 
     public static GameManager Instance { get; private set; } = null;
-    public ProcedureState State { get; private set; } = ProcedureState.Hello; 
+    public ProcedureState State { get; private set; } = ProcedureState.Hello;
     public int Day { get; private set; } = 1;
     public int CustomerIndex { get; private set; } = 0;
 
     private int dialogSize;
     private int currentDialog;
-    
+
     private List<string> customers;
     private Dialog commu;
 
     private int sumPrice = 0;
-    
+
     private const float DefaultPriceShowTime = 1.8f;
     private const float SkillPriceShowTime = 1f;
     private float priceShowTime = DefaultPriceShowTime;
-    private const float DefaultPriceShowPower = 1; 
+    private const float DefaultPriceShowPower = 1;
     private const float SkillPriceShowPower = 0.8f;
     private float priceShowPower = DefaultPriceShowPower;
-    
+
     private bool isCommunication = false;
     private bool typing = false;
     private int correctCount = 0;
-    
+
     private void Awake() {
         if (Instance == null)
             Instance = this;
         else if (Instance != this)
             Destroy(this);
+        
+        
+        dayShower.text = $"{Day}Day\n{CustomerIndex + 1} / 3";
     }
 
     IEnumerator Typing(TMP_Text dialog, string context, float interval = 0.1f, int index = 0) {
 
         if (index == 0) {
-            
+
             typing = true;
             dialog.text = "";
         }
@@ -73,12 +77,13 @@ public class GameManager : MonoBehaviour {
             typing = false;
             yield break;
         }
+
         dialog.text += context[index];
         yield return new WaitForSeconds(interval);
 
         StartCoroutine(Typing(dialog, context, interval, index + 1));
     }
-    
+
     private void Communication() {
 
         if (currentDialog >= dialogSize) {
@@ -95,19 +100,23 @@ public class GameManager : MonoBehaviour {
         }
 
         if (commu.Actors[commu.Scripts[currentDialog].Actor] == "Event") {
-            
+
             //TODO: Event procedure
             currentDialog++;
         }
-        
+
         customerName.text = commu.Actors[commu.Scripts[currentDialog].Actor];
+        if (commu.Actors[commu.Scripts[currentDialog].Actor] == "NA") {
+            customerName.text = "";
+        }
+
         StartCoroutine(Typing(dialog, commu.Scripts[currentDialog].Script));
 
         currentDialog++;
     }
-    
+
     private void NextDay() {
-        
+
         if (CustomerIndex <= 2)
             return;
         CustomerIndex = 0;
@@ -117,53 +126,69 @@ public class GameManager : MonoBehaviour {
     }
 
     public void NextCustomer() {
-        
+
         CustomerIndex++;
         NextDay();
+        dayShower.text = $"{Day}Day\n{CustomerIndex + 1} / 3";
     }
 
     private bool isSettingItem = false;
     private bool isSettingCommunication = false;
     private bool isUseSkill = false;
-
+    private bool isWaitStartDelay = false;
+    private const float StartDelay = 1;
+    private float delayTimer = 0;
+    
     private bool isSubmit = false;
     private long submitNumber = 0;
+
     public void SubmitNumber(long number) {
 
         isSubmit = true;
         submitNumber = number;
     }
+
     private void Update() {
 
         if (Day == 4) {
-            
+
             //TODO: Ending
         }
-        
-        if (State == ProcedureState.Hello && !isSettingCommunication) {
+
+        if (State == ProcedureState.Hello && !isWaitStartDelay) {
+
+            delayTimer += Time.deltaTime;
+            if (delayTimer >= StartDelay) {
+
+                delayTimer = 0;
+                isWaitStartDelay = true;
+            }
+        }
+        else if (State == ProcedureState.Hello && !isSettingCommunication) {
 
             if (CustomerIndex == 0) {
-                
+
                 customers = new Shuffler<string>(ConvertJson.Instance.PeopleList.Skip(1)).ToList();
             }
+
             isUseSkill = false;
-            
+
             commu = ConvertJson.Instance.GetDialog(customers[CustomerIndex], $"Hello{Day}");
             currentDialog = 0;
             dialogSize = commu.Scripts.Count;
-            isSettingCommunication = true; 
-            
+            isSettingCommunication = true;
+
             Communication();
         }
-        
-        else if ( State == ProcedureState.Hello&& (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))) {
-            
+
+        else if (State == ProcedureState.Hello && (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))) {
+
             if (typing) {
-                
+
                 typing = false;
             }
             else {
-                
+
                 Communication();
 
                 if (!isCommunication) {
@@ -178,14 +203,14 @@ public class GameManager : MonoBehaviour {
             if (!isUseSkill) {
 
                 Calculator.Instance.TurnOn();
-                
+
                 isUseSkill = true;
 
                 var customer = customers[CustomerIndex];
                 if (customer == "단소 할아버지") {
                     if (Day == 2)
                         DansoSkill.Instance.StartSkill();
-                    if (Day == 3) 
+                    if (Day == 3)
                         ShoutingSkill.Instance.StartSkill();
                 }
                 else if (customer == "부자 아줌마" && Day == 3) {
@@ -197,20 +222,20 @@ public class GameManager : MonoBehaviour {
                     priceShowTime = SkillPriceShowTime;
                 }
             }
-            
+
             if (!isSettingItem) {
-                
+
                 isSettingItem = true;
                 sumPrice = ShowPrice.Instance.Setting(Day, customers[CustomerIndex]);
             }
 
             if (ShowPrice.Instance.StartShow(priceShowTime, priceShowPower) == ShowState.End) {
-                
+
                 priceShowPower = DefaultPriceShowPower;
                 priceShowTime = DefaultPriceShowTime;
                 ShoutingSkill.Instance.EndSkill();
                 DansoSkill.Instance.EndSkill();
-                
+
                 isSettingItem = false;
                 State++;
             }
@@ -219,7 +244,7 @@ public class GameManager : MonoBehaviour {
         else if (State == ProcedureState.EndOrder) {
 
             if (!isSettingCommunication) {
-                
+
                 commu = ConvertJson.Instance.GetDialog(customers[CustomerIndex], $"endOrder{Day}");
                 currentDialog = 0;
                 dialogSize = commu.Scripts.Count;
@@ -227,7 +252,7 @@ public class GameManager : MonoBehaviour {
                 Communication();
                 Debug.Log(sumPrice);
             }
-            else if(Input.GetKeyDown(KeyCode.Space)) {
+            else if (Input.GetKeyDown(KeyCode.Space)) {
                 if (typing) {
                     typing = false;
                 }
@@ -239,7 +264,7 @@ public class GameManager : MonoBehaviour {
                         isSettingCommunication = false;
                     }
                 }
-                
+
             }
         }
 
@@ -249,7 +274,7 @@ public class GameManager : MonoBehaviour {
 
                 isSubmit = false;
                 Calculator.Instance.TurnOff();
-                
+
                 if (submitNumber == sumPrice) {
                     State = ProcedureState.Correct;
                 }
@@ -262,33 +287,34 @@ public class GameManager : MonoBehaviour {
         else if (State == ProcedureState.Wrong) {
 
             if (!isSettingCommunication) {
-                            
+
                 commu = ConvertJson.Instance.GetDialog(customers[CustomerIndex], $"wrong{Day}");
                 currentDialog = 0;
                 dialogSize = commu.Scripts.Count;
                 isSettingCommunication = true;
                 Communication();
             }
-            else if(Input.GetKeyDown(KeyCode.Space)) {
+            else if (Input.GetKeyDown(KeyCode.Space)) {
                 if (typing) {
                     typing = false;
                 }
                 else {
                     Communication();
-            
+
                     if (!isCommunication) {
 
                         NextCustomer();
                         State = ProcedureState.Hello;
                         isSettingCommunication = false;
+                        isWaitStartDelay = false;
                     }
                 }
-                            
+
             }
         }
-        
+
         else if (State == ProcedureState.Correct) {
-            
+
             if (!isSettingCommunication) {
 
                 correctCount++;
@@ -298,23 +324,24 @@ public class GameManager : MonoBehaviour {
                 isSettingCommunication = true;
                 Communication();
             }
-            else if(Input.GetKeyDown(KeyCode.Space)) {
+            else if (Input.GetKeyDown(KeyCode.Space)) {
                 if (typing) {
                     typing = false;
                 }
                 else {
                     Communication();
-                        
+
                     if (!isCommunication) {
 
                         NextCustomer();
                         State = ProcedureState.Hello;
                         isSettingCommunication = false;
+                        isWaitStartDelay = false;
                     }
                 }
-                                        
+
             }
         }
-        
+
     }
 }

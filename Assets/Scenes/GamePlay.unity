@@ -243,7 +243,7 @@ Transform:
   m_GameObject: {fileID: 149133660}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.84, y: 0.94, z: -0.7}
+  m_LocalPosition: {x: 12, y: 0.94, z: -0.7}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -616,7 +616,7 @@ RectTransform:
   m_GameObject: {fileID: 407421896}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.82509, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1638361644}
@@ -624,7 +624,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -20, y: 0}
   m_SizeDelta: {x: 400, y: 150}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &407421898
@@ -1505,6 +1505,7 @@ GameObject:
   - component: {fileID: 1238627435}
   - component: {fileID: 1238627436}
   - component: {fileID: 1238627437}
+  - component: {fileID: 1238627438}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -1527,7 +1528,6 @@ MonoBehaviour:
   item: {fileID: 1654380097}
   priceBox: {fileID: 369897502}
   eventBox: {fileID: 1086628508}
-  result: 0
 --- !u!114 &1238627432
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1625,6 +1625,20 @@ MonoBehaviour:
   customerName: {fileID: 1506849701}
   dialog: {fileID: 1893937797}
   box: {fileID: 1429243509}
+  dayShower: {fileID: 1638361645}
+--- !u!114 &1238627438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1238627430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25357009b8f4471fab0a36037e68ddda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dansoPrefab: {fileID: 3269596805478061520, guid: 9f806238595aa444d930e102f0b92d5e, type: 3}
 --- !u!1 &1272172285
 GameObject:
   m_ObjectHideFlags: 0
@@ -2422,16 +2436,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1638361643}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.2119889, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 407421897}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -0.02178955, y: 0}
   m_SizeDelta: {x: 350, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1638361645
@@ -2454,7 +2468,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 1 Day
+  m_text: '1 Day
+
+    1/3'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2481,8 +2497,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 80
-  m_fontSizeBase: 80
+  m_fontSize: 60
+  m_fontSizeBase: 60
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -3538,7 +3554,6 @@ GameObject:
   - component: {fileID: 1900970524}
   - component: {fileID: 1900970525}
   - component: {fileID: 1900970526}
-  - component: {fileID: 1900970527}
   - component: {fileID: 1900970528}
   - component: {fileID: 1900970529}
   m_Layer: 0
@@ -3773,18 +3788,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c8a76b2e57c04e3fb9145611b34bf2e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1900970527
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1900970520}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9291d5f3ed6dc194a90384ef639b6db3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1900970528

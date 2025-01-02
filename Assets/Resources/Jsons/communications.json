@@ -26,7 +26,7 @@
                     {"actor": 1, "script":"어서오ㅅ..."},
                     {"actor": 0, "script":"어이, 너 누구야."},
                     {"actor": 1, "script":"네?"},
-                    {"actor": 2, "script":"DansoDrop", "skip": true},
+                    {"actor": 2, "script":"ItemsDrop", "skip": true},
                     {"actor": 0, "script":"계산이나 해!"}
                 ]
 
@@ -53,7 +53,7 @@
                 "situation": "endOrder1",
                 "actors": ["단소 할아버지"],
                 "scripts":[
-                    {"actor": 0, "script": "여기까지"}
+                    {"actor": 0, "script": "여기까지, 빨리 계산해!"}
                 ]
             },
             {
@@ -72,30 +72,27 @@
             },
             {
                 "situation": "wrong1",
-                "actors" : ["단소 할아버지", "Sound", "Image"],
+                "actors" : ["단소 할아버지", "Event"],
                 "scripts" : [
                     {"actor": 2, "script":"wrongDanso1", "skip": true},
-                    {"actor": 1, "script":"wrongDanso1.mp4", "skip": true},
                     {"actor": 0, "script":"젊은이가 이거 하나 못해!?!"}
                 ]
 
             },
             {
                 "situation": "wrong2",
-                "actors" : ["단소 할아버지", "Sound", "Image"],
+                "actors" : ["단소 할아버지", "Event"],
                 "scripts" : [
-                    {"actor": 2, "script":"wrongDanso1", "skip": true},
-                    {"actor": 1, "script":"wrongDanso1.mp4", "skip": true},
+                    {"actor": 2, "script":"wrongDanso2", "skip": true},
                     {"actor": 0, "script":"젊은이가 이거 하나 못해!?!"}
                 ]
 
             },
             {
                 "situation": "wrong3",
-                "actors" : ["단소 할아버지", "Sound", "Image"],
+                "actors" : ["단소 할아버지", "Event"],
                 "scripts" : [
-                    {"actor": 2, "script":"wrongDanso1", "skip": true},
-                    {"actor": 1, "script":"wrongDanso1.mp4", "skip": true},
+                    {"actor": 1, "script":"wrongDanso3", "skip": true},
                     {"actor": 0, "script":"젊은이가 이거 하나 못해!?!"}
                 ]
 
@@ -134,13 +131,13 @@
 
             {
                 "situation": "Hello1",
-                "actors" : ["단소 할아버지", "주인공", "Event"],
+                "actors" : ["부자 아줌마", "주인공", "Event", "NA"],
                 "scripts" : [
-                    {"actor": 1, "script":"어서오ㅅ..."},
-                    {"actor": 0, "script":"어이, 너 누구야."},
-                    {"actor": 1, "script":"네?"},
-                    {"actor": 2, "script":"DansoDrop", "skip": true},
-                    {"actor": 0, "script":"계산이나 해!"}
+                    {"actor": 1, "script":"어서오세요. AU입니다."},
+                    {"actor": 3, "script":"매몰차게 무시하고 물건을 고르러 간다."},
+                    {"actor": 0, "script":"홍홍홍~ 물건들이 정말 저급하기 짝이 없군요."},
+                    {"actor": 1, "script":"ㅎㅎ;; 많이 불편하신 부분이 있으신가요?"},
+                    {"actor": 2, "script":"계산이나 해요."}
                 ]
 
             },
@@ -164,32 +161,31 @@
             },
             {
                 "situation": "endOrder1",
-                "actors": ["단소 할아버지"],
+                "actors": ["부자 아줌마"],
                 "scripts":[
                     {"actor": 0, "script": "여기까지"}
                 ]
             },
             {
                 "situation": "endOrder2",
-                "actors": ["단소 할아버지"],
+                "actors": ["부자 아줌마"],
                 "scripts":[
                     {"actor": 0, "script": "여기까지"}
                 ]
             },
             {
                 "situation": "endOrder3",
-                "actors": ["단소 할아버지"],
+                "actors": ["부자 아줌마"],
                 "scripts":[
                     {"actor": 0, "script": "여기까지"}
                 ]
             },
             {
                 "situation": "wrong1",
-                "actors" : ["단소 할아버지", "Sound", "Image"],
+                "actors" : ["부자 아줌마", "Event"],
                 "scripts" : [
-                    {"actor": 2, "script":"wrongDanso1", "skip": true},
-                    {"actor": 1, "script":"wrongDanso1.mp4", "skip": true},
-                    {"actor": 0, "script":"젊은이가 이거 하나 못해!?!"}
+                    {"actor": 0, "script": "이런 것, 하나 제대로 못하니까 니가 하층민인거야!!"},
+                    {"actor": 1, "script": "wrongRich1"}
                 ]
 
             },
@@ -215,10 +211,10 @@
             },
             {
                 "situation": "correct1",
-                "actors" : ["단소 할아버지", "주인공"],
+                "actors" : ["부자 아줌마", "NA"],
                 "scripts" : [
-                    {"actor": 0, "script":"여기, 돈"},
-                    {"actor": 1, "script":"감사합니다!"}
+                    {"actor": 0, "script":"홍홍홍"},
+                    {"actor": 1, "script":"부자 아줌마는 계산을 다한 후에 유유히 나가셨다."}
                 ]
             },
             {
@@ -247,13 +243,11 @@
 
             {
                 "situation": "Hello1",
-                "actors" : ["단소 할아버지", "주인공", "Event"],
+                "actors" : ["초딩", "주인공"],
                 "scripts" : [
-                    {"actor": 1, "script":"어서오ㅅ..."},
-                    {"actor": 0, "script":"어이, 너 누구야."},
-                    {"actor": 1, "script":"네?"},
-                    {"actor": 2, "script":"DansoDrop", "skip": true},
-                    {"actor": 0, "script":"계산이나 해!"}
+                    {"actor": 1, "script":"어서오세요. AU 편의점입니다!"},
+                    {"actor": 0, "script":"안녕하세요...구르트!"},
+                    {"actor": 0, "script":"계산해주세용!"}
                 ]
 
             },
@@ -277,32 +271,31 @@
             },
             {
                 "situation": "endOrder1",
-                "actors": ["단소 할아버지"],
+                "actors": ["초딩"],
                 "scripts":[
-                    {"actor": 0, "script": "여기까지"}
+                    {"actor": 0, "script": "이것까지 계산해주세요!"}
                 ]
             },
             {
                 "situation": "endOrder2",
-                "actors": ["단소 할아버지"],
+                "actors": ["초딩"],
                 "scripts":[
-                    {"actor": 0, "script": "여기까지"}
+                    {"actor": 0, "script": "이것까지 계산해주세요!"}
                 ]
             },
             {
                 "situation": "endOrder3",
-                "actors": ["단소 할아버지"],
+                "actors": ["초딩"],
                 "scripts":[
-                    {"actor": 0, "script": "여기까지"}
+                    {"actor": 0, "script": "이것까지 계산해주세요!"}
                 ]
             },
             {
                 "situation": "wrong1",
-                "actors" : ["단소 할아버지", "Sound", "Image"],
+                "actors" : ["초딩", "주인공", "Event"],
                 "scripts" : [
-                    {"actor": 2, "script":"wrongDanso1", "skip": true},
-                    {"actor": 1, "script":"wrongDanso1.mp4", "skip": true},
-                    {"actor": 0, "script":"젊은이가 이거 하나 못해!?!"}
+                    {"actor": 2, "script":"wrongFace", "skip": true},
+                    {"actor": 0, "script":"어른이 되어서 이런 계산 하나 똑바로 못해요!?"}
                 ]
 
             },
@@ -328,10 +321,11 @@
             },
             {
                 "situation": "correct1",
-                "actors" : ["단소 할아버지", "주인공"],
+                "actors" : ["초딩", "주인공", "Event"],
                 "scripts" : [
-                    {"actor": 0, "script":"여기, 돈"},
-                    {"actor": 1, "script":"감사합니다!"}
+                    {"actor": 2, "script":"ChodingSurprise"},
+                    {"actor": 1, "script":"혹시 무슨 일있니?"},
+                    {"actor": 0, "script":"내가 이렇게 많이 샀다고?!?!?!?"}
                 ]
             },
             {

@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using DG.Tweening;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -20,8 +21,15 @@ public class Calculator : MonoBehaviour {
 
     private const long MaxValue = (long)1e+10;
     
-    public void TurnOn() => calculator.SetActive(true);
-    public void TurnOff() => calculator.SetActive(false);
+    public Tween TurnOn() {
+
+        return calculator.transform.DOLocalMoveX(5.85f, 0.5f)
+            .SetEase(Ease.OutCubic);
+    }
+
+    public Tween TurnOff() {
+        return calculator.transform.DOLocalMoveX(12, 0.3f);
+    }
 
     [Obsolete("Never touch this value, you must touch by Estimate", false)]
     private long estimate;
