@@ -28,7 +28,7 @@ public class CalculatorButton: MonoBehaviour, IPointerEnterHandler, IPointerExit
                 Calculator.Instance.MultipleValue(100);
             else if (value == 's') {
                 
-                //Calculator.Instance.Submit();
+                
             }
             else {
                 Calculator.Instance.AddValue((int)value - 48);

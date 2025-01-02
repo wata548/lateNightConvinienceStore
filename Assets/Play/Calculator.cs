@@ -125,6 +125,10 @@ public class Calculator : MonoBehaviour {
             backSpace = 0;
             startBackSpace = false;
         }
+        
+        else if (Input.GetKeyDown(KeyCode.Return)) {
+            GameManager.
+        }
     }
 
     private void Awake() {

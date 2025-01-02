@@ -24,8 +24,9 @@ public class GameManager : MonoBehaviour {
     [SerializeField] private TMP_Text dialog;
     [SerializeField] private GameObject box;
 
+    public static GameManager Instance { get; private set; } = null;
     public ProcedureState State { get; private set; } = ProcedureState.Hello; 
-    public int Day { get; private set; } = 1;
+    public int Day { get; private set; } = 3;
     public int CustomerIndex { get; private set; } = 0;
 
     private int dialogSize;
@@ -108,7 +109,6 @@ public class GameManager : MonoBehaviour {
     public void NextCustomer() {
         CustomerIndex++;
     }
-    
 
     private bool isSettingItem = false;
     private bool isSettingCommunication = false;

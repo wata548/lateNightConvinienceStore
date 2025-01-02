@@ -36,8 +36,8 @@
                 "actors" : ["단소 할아버지", "주인공", "Event"],
                 "scripts" : [
 
-                    {"actor": 1, "script": ""},
-                    {"actor": 1, "script": ""}
+                    {"actor": 1, "script": "132"},
+                    {"actor": 1, "script": "123"}
                 ]
             },
             {
@@ -45,8 +45,8 @@
                 "actors" : ["단소 할아버지", "주인공", "Event"],
                 "scripts" : [
 
-                    {"actor": 1, "script": ""},
-                    {"actor": 1, "script": ""}
+                    {"actor": 1, "script": "123"},
+                    {"actor": 1, "script": "123"}
                 ]
             },
             {
@@ -149,8 +149,8 @@
                 "actors" : ["단소 할아버지", "주인공", "Event"],
                 "scripts" : [
 
-                    {"actor": 1, "script": ""},
-                    {"actor": 1, "script": ""}
+                    {"actor": 1, "script": "123"},
+                    {"actor": 1, "script": "123"}
                 ]
             },
             {
@@ -158,8 +158,8 @@
                 "actors" : ["단소 할아버지", "주인공", "Event"],
                 "scripts" : [
 
-                    {"actor": 1, "script": ""},
-                    {"actor": 1, "script": ""}
+                    {"actor": 1, "script": "123"},
+                    {"actor": 1, "script": "123"}
                 ]
             },
             {
@@ -262,8 +262,8 @@
                 "actors" : ["단소 할아버지", "주인공", "Event"],
                 "scripts" : [
 
-                    {"actor": 1, "script": ""},
-                    {"actor": 1, "script": ""}
+                    {"actor": 1, "script": "123"},
+                    {"actor": 1, "script": "123"}
                 ]
             },
             {
@@ -271,8 +271,8 @@
                 "actors" : ["단소 할아버지", "주인공", "Event"],
                 "scripts" : [
 
-                    {"actor": 1, "script": ""},
-                    {"actor": 1, "script": ""}
+                    {"actor": 1, "script": "123"},
+                    {"actor": 1, "script": "123"}
                 ]
             },
             {
