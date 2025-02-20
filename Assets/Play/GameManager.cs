@@ -4,9 +4,6 @@ using System.Linq;
 using UnityEngine;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
-using UnityEditor.Rendering;
-using UnityEngine.Serialization;
 
 [Serializable]
 public enum ProcedureState {
@@ -29,7 +26,7 @@ public class GameManager : MonoBehaviour {
     public static GameManager Instance { get; private set; } = null;
     public ProcedureState State { get; private set; } = ProcedureState.Hello;
     public int Day { get; private set; } = 1;
-    public int CustomerIndex { get; private set; } = -1;
+    public int CustomerIndex { get; private set; } = 0;
 
     private int dialogSize;
     private int currentDialog;
@@ -43,7 +40,7 @@ public class GameManager : MonoBehaviour {
     private const float SkillPriceShowTime = 1f;
     private float priceShowTime = DefaultPriceShowTime;
     private const float DefaultPriceShowPower = 1;
-    private const float SkillPriceShowPower = 0.8f;
+    private const float SkillPriceShowPower = 0.5f;
     private float priceShowPower = DefaultPriceShowPower;
 
     private bool isCommunication = false;
@@ -57,7 +54,11 @@ public class GameManager : MonoBehaviour {
             Destroy(this);
         
         customers = new Shuffler<string>(ConvertJson.Instance.PeopleList.Skip(1)).ToList();
-        NextCustomer();
+        
+    }
+
+    private void Start() {
+        Customer.Instance.SetCustomer(customers[CustomerIndex]);
     }
 
     IEnumerator Typing(TMP_Text dialog, string context, float interval = 0.1f, int index = 0) {
@@ -142,7 +143,7 @@ public class GameManager : MonoBehaviour {
         CustomerIndex++;
         NextDay();
         dayShower.text = $"{Day}Day\n{CustomerIndex + 1} / 3";
-        
+
         Customer.Instance.SetCustomer(customers[CustomerIndex]);
     }
 
@@ -261,7 +262,7 @@ public class GameManager : MonoBehaviour {
                 Communication();
                 Debug.Log(sumPrice);
             }
-            else if (Input.GetKeyDown(KeyCode.Space)) {
+            else if (Input.GetKeyDown(KeyCode.Space)||Input.GetMouseButtonDown(0)) {
                 if (typing) {
                     typing = false;
                 }
@@ -303,7 +304,7 @@ public class GameManager : MonoBehaviour {
                 isSettingCommunication = true;
                 Communication();
             }
-            else if (Input.GetKeyDown(KeyCode.Space)) {
+            else if (Input.GetKeyDown(KeyCode.Space)||Input.GetMouseButtonDown(0)) {
                 if (typing) {
                     typing = false;
                 }
@@ -333,7 +334,7 @@ public class GameManager : MonoBehaviour {
                 isSettingCommunication = true;
                 Communication();
             }
-            else if (Input.GetKeyDown(KeyCode.Space)) {
+            else if (Input.GetKeyDown(KeyCode.Space)||Input.GetMouseButtonDown(0)) {
                 if (typing) {
                     typing = false;
                 }

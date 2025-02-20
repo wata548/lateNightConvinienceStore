@@ -1506,6 +1506,7 @@ GameObject:
   - component: {fileID: 1238627436}
   - component: {fileID: 1238627437}
   - component: {fileID: 1238627438}
+  - component: {fileID: 1238627439}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -1639,6 +1640,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dansoPrefab: {fileID: 3269596805478061520, guid: 9f806238595aa444d930e102f0b92d5e, type: 3}
+--- !u!114 &1238627439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1238627430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 048c73e0c6024ae2bad4a8702536e029, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  customer: {fileID: 1636660039}
+  dansoDefault: {fileID: 9022530964158441675, guid: 32c9b43850df1b340a144b3333257cfa, type: 3}
+  chodingDefault: {fileID: -3949969765561180164, guid: 0774a998a9859504cb1d9cd859f0b0a3, type: 3}
+  chodingSurprise: {fileID: -3185233234148082586, guid: 767c815826f15484787c45bb9ae3155e, type: 3}
+  richDefault: {fileID: 2096110321097541773, guid: 727ba2fbf61ffed4097ca1acdd0f3823, type: 3}
+  richAngry: {fileID: 332988980627353859, guid: 4da8d632a43ba744dbfe07eb32c66aac, type: 3}
+  richHappy: {fileID: -49704102366128691, guid: dc111341949a929488216705e424350c, type: 3}
 --- !u!1 &1272172285
 GameObject:
   m_ObjectHideFlags: 0
@@ -2385,8 +2405,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.93710685, g: 0, b: 0, a: 1}
+  m_Sprite: {fileID: -446587232431985157, guid: 8f9620e9897a9da4a9b864099dba628a, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -2405,8 +2425,8 @@ Transform:
   m_GameObject: {fileID: 1636660038}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.19, y: -2.09, z: 0}
-  m_LocalScale: {x: 2.975, y: 5.5375, z: 1}
+  m_LocalPosition: {x: 0, y: -0.24, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.09029346}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}

@@ -5,8 +5,6 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Reflection;
 using DG.Tweening;
-using UnityEditor.Rendering;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public enum ShowState {
